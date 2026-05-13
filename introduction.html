@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technical Emotion Design — Introduction</title>
+<style>
+:root {
+  --cream: #FAF7F2;
+  --ink: #251A10;
+  --ink-mid: #6B5344;
+  --ink-light: #A08070;
+  --coral: #D94F2A;
+  --brass: #B87D2A;
+  --teal: #1B7A68;
+  --grid: #EDE5D8;
+  --paper: #FDFAF6;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.72;
+  overflow-x: hidden;
+}
+
+/* ── Hero ─────────────────────────────────────────────── */
+.hero { padding: 88px 24px 40px; text-align: center; max-width: 720px; margin: 0 auto; }
+.eyebrow { font-size: .72em; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--brass); margin-bottom: 22px; }
+.hero h1 { font-size: clamp(2.2em,5.5vw,3.8em); font-weight: 900; line-height: 1.06; letter-spacing: -.025em; margin-bottom: 24px; }
+.hero h1 em { font-style: normal; color: var(--coral); }
+.hero .subtitle { font-size: 1.05em; color: var(--ink-mid); max-width: 540px; margin: 0 auto; line-height: 1.7; }
+
+/* ── Opening prose ────────────────────────────────────── */
+.opening { max-width: 620px; margin: 0 auto; padding: 28px 24px 40px; }
+.opening p { font-size: 1.05em; margin-bottom: 18px; line-height: 1.78; color: var(--ink); }
+.opening p:last-child { margin-bottom: 0; }
+.opening .small-note { font-size: .92em; color: var(--ink-light); font-style: italic; margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--grid); }
+
+/* ── Begin button ─────────────────────────────────────── */
+.begin-wrap { text-align: center; padding: 16px 24px 72px; }
+.begin-btn {
+  background: var(--coral); color: white; border: none;
+  padding: 18px 44px; border-radius: 100px;
+  font-size: 1.05em; font-weight: 700; font-family: inherit;
+  cursor: pointer; letter-spacing: .01em;
+  box-shadow: 0 4px 18px rgba(217,79,42,.28);
+  transition: transform .2s, box-shadow .2s;
+}
+.begin-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(217,79,42,.36); }
+.begin-btn:active { transform: translateY(0); }
+
+/* ── Modal ────────────────────────────────────────────── */
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(37,26,16,.78); z-index: 200;
+  display: flex; align-items: center; justify-content: center; padding: 18px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .4s ease;
+}
+.modal-backdrop.open { opacity: 1; pointer-events: auto; }
+.modal-box {
+  background: var(--paper); border-radius: 14px; max-width: 1080px; width: 100%;
+  max-height: 94vh; overflow-y: auto;
+  padding: 30px 30px 24px; position: relative;
+  transform: scale(.96) translateY(10px);
+  transition: transform .42s cubic-bezier(.22,1,.36,1);
+  box-shadow: 0 8px 18px rgba(37,26,16,.18), 0 32px 72px rgba(37,26,16,.32);
+  display: flex; flex-direction: column; gap: 20px;
+}
+.modal-backdrop.open .modal-box { transform: scale(1) translateY(0); }
+@media (max-width: 760px) { .modal-box { padding: 20px 16px 18px; } }
+
+.modal-header { display: flex; flex-direction: column; gap: 6px; }
+.modal-eyebrow { font-size: .68em; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--brass); }
+.modal-title { font-size: 1.35em; font-weight: 800; letter-spacing: -.015em; color: var(--ink); }
+.modal-subtitle { font-size: .96em; color: var(--ink-mid); line-height: 1.55; margin-top: 4px; }
+
+.modal-body {
+  display: grid; grid-template-columns: 1fr 1.05fr; gap: 22px;
+  align-items: stretch;
+}
+@media (max-width: 880px) {
+  .modal-body { grid-template-columns: 1fr; }
+}
+
+/* ── Arena (target arrangement) ───────────────────────── */
+.arena-wrap {
+  background: white; border-radius: 12px; padding: 16px;
+  box-shadow: 0 1px 3px rgba(37,26,16,.05), 0 4px 14px rgba(37,26,16,.07);
+  display: flex; flex-direction: column;
+}
+.arena-label { font-size: .66em; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 10px; }
+#arena {
+  width: 100%; aspect-ratio: 5 / 4; display: block;
+  background: var(--cream); border-radius: 8px;
+}
+
+/* ── Editor ───────────────────────────────────────────── */
+.editor-wrap {
+  background: white; border-radius: 12px; padding: 16px;
+  box-shadow: 0 1px 3px rgba(37,26,16,.05), 0 4px 14px rgba(37,26,16,.07);
+  display: flex; flex-direction: column;
+}
+.editor-label { font-size: .66em; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 10px; }
+.editor-area {
+  flex: 1; min-height: 320px;
+  width: 100%; border: 1.5px solid var(--grid); border-radius: 8px;
+  padding: 14px 16px; font-size: 1em; font-family: inherit; line-height: 1.65;
+  color: var(--ink); background: var(--cream); resize: vertical;
+  outline: none; transition: border-color .18s;
+}
+.editor-area:focus { border-color: var(--brass); background: white; }
+.word-count { font-size: .8em; color: var(--ink-light); text-align: right; margin-top: 6px; font-style: italic; }
+
+/* ── Modal footer ─────────────────────────────────────── */
+.modal-footer {
+  display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  flex-wrap: wrap; padding-top: 4px;
+}
+.modal-help { font-size: .86em; color: var(--ink-light); line-height: 1.5; max-width: 580px; }
+.close-btn {
+  background: var(--ink); color: white; border: none;
+  padding: 13px 28px; border-radius: 100px;
+  font-size: .95em; font-weight: 700; font-family: inherit;
+  cursor: pointer; letter-spacing: .01em;
+  box-shadow: 0 3px 12px rgba(37,26,16,.18);
+  transition: transform .2s, box-shadow .2s, background .2s;
+}
+.close-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(37,26,16,.24); background: #1a1108; }
+
+/* ── After-window content ─────────────────────────────── */
+#after-window { display: none; }
+#after-window.shown { display: block; }
+
+.after-section { max-width: 720px; margin: 0 auto; padding: 56px 24px 24px; }
+.after-section h2 { font-size: clamp(1.5em,3.3vw,2em); font-weight: 900; letter-spacing: -.02em; line-height: 1.18; margin-bottom: 20px; }
+.after-section p { font-size: 1.05em; margin-bottom: 18px; line-height: 1.78; }
+.after-section p.small { font-size: .94em; color: var(--ink-mid); }
+
+.draft-display {
+  background: white; border-radius: 12px; padding: 22px 24px;
+  box-shadow: 0 1px 2px rgba(37,26,16,.04), 0 4px 14px rgba(37,26,16,.07);
+  margin: 22px 0 16px;
+  white-space: pre-wrap; word-wrap: break-word;
+  font-size: 1em; line-height: 1.65; color: var(--ink);
+}
+.draft-label { font-size: .7em; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 10px; }
+.draft-empty { color: var(--ink-light); font-style: italic; }
+
+.handoff {
+  background: var(--ink); color: white; padding: 64px 24px 80px;
+  margin-top: 48px; text-align: center;
+}
+.handoff h2 { font-size: clamp(1.5em,3.3vw,2.2em); font-weight: 900; letter-spacing: -.02em; line-height: 1.15; margin-bottom: 18px; }
+.handoff h2 em { font-style: normal; color: var(--coral); }
+.handoff p { font-size: 1.02em; color: rgba(255,255,255,.7); max-width: 520px; margin: 0 auto 14px; line-height: 1.72; }
+
+.footer { padding: 28px 24px 56px; text-align: center; }
+.footer p { font-size: .84em; color: var(--ink-light); font-style: italic; }
+
+.reopen-note {
+  max-width: 620px; margin: 0 auto; padding: 22px 24px;
+  font-size: .92em; color: var(--ink-light); font-style: italic;
+  text-align: center; line-height: 1.6;
+  border-top: 1px solid var(--grid); border-bottom: 1px solid var(--grid);
+}
+.reopen-note .reopen-btn {
+  background: none; border: 1.5px solid var(--grid); border-radius: 100px;
+  padding: 7px 18px; font-size: .86em; font-weight: 600; font-family: inherit;
+  color: var(--ink-mid); cursor: pointer; margin-left: 10px;
+  transition: border-color .18s, color .18s;
+}
+.reopen-note .reopen-btn:hover { border-color: var(--brass); color: var(--brass); }
+</style>
+</head>
+<body>
+
+<!-- ── Before the window ─────────────────────────────────── -->
+
+<section class="hero">
+  <div class="eyebrow">Technical Emotion Design</div>
+  <h1><em>Introduction</em></h1>
+  <p class="subtitle">This is a handbook for designing things that are hard on purpose. Before you read it, you are going to try one.</p>
+</section>
+
+<section class="opening">
+  <p>Someone wrote instructions for assembling a small picture of five shapes. The instructions did not quite work. You will see the picture and the instructions side by side.</p>
+  <p>Your job is to revise the instructions so they actually work. Edit them in place. Take as long as you want.</p>
+  <p>When you are ready &mdash; whenever you are ready &mdash; close the window. The picture will go away.</p>
+  <p>Your writing will not.</p>
+  <p class="small-note">If you come back later and open the window again, you will get a different picture and different instructions. The pair you saw the first time is gone. What you wrote is how it stays.</p>
+</section>
+
+<div class="begin-wrap">
+  <button class="begin-btn" id="beginBtn">Begin</button>
+</div>
+
+
+<!-- ── The window ────────────────────────────────────────── -->
+
+<div class="modal-backdrop" id="modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-eyebrow">The picture and the instructions</div>
+      <div class="modal-title">Revise the instructions so they work.</div>
+      <div class="modal-subtitle">Stay as long as you want. When you close the window, the picture goes away. Your writing stays.</div>
+    </div>
+
+    <div class="modal-body">
+      <div class="arena-wrap">
+        <div class="arena-label">The picture</div>
+        <svg id="arena" viewBox="0 0 500 400" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+
+      <div class="editor-wrap">
+        <div class="editor-label">The instructions (yours to revise)</div>
+        <textarea class="editor-area" id="editor"></textarea>
+        <div class="word-count" id="wordCount">0 words</div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="modal-help">When you close the window, the picture is gone. Your revised instructions stay. You can keep editing afterwards.</div>
+      <button class="close-btn" id="closeBtn">Close the window</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── After the window ──────────────────────────────────── -->
+
+<div id="after-window">
+
+  <section class="after-section">
+    <h2>Here is what you wrote.</h2>
+    <div class="draft-display" id="committedDisplay"><span class="draft-empty">(you did not change anything)</span></div>
+    <p>Is anything hard to follow now that you can&rsquo;t see the picture? Change anything you want. We&rsquo;ll come back to this later.</p>
+
+    <div style="background: white; border-radius: 12px; padding: 22px 24px; box-shadow: 0 1px 2px rgba(37,26,16,.04), 0 4px 14px rgba(37,26,16,.07); margin-top: 18px;">
+      <textarea id="revised" style="width: 100%; min-height: 220px; border: 1.5px solid var(--grid); border-radius: 8px; padding: 14px 16px; font-size: 1em; font-family: inherit; line-height: 1.65; color: var(--ink); background: var(--cream); resize: vertical; outline: none;" placeholder="Change it here, if you want."></textarea>
+    </div>
+    <p class="small" style="font-style: italic; line-height: 1.55; margin-top: 12px;">Both versions stay in your browser. Nothing leaves this page.</p>
+  </section>
+
+  <section class="handoff">
+    <h2>That was the <em>first</em> piece of the work.</h2>
+    <p>You read instructions someone else wrote, watched the picture they were trying to describe, and revised toward a follower who only has your words.</p>
+    <p>The rest of this handbook gives you words for what you just did &mdash; and helps you do it on purpose. In classrooms. On teams. With kids. With AI. With anyone who has to follow instructions you wrote.</p>
+  </section>
+
+  <div class="footer">
+    <p>Technical Emotion Design &mdash; Introduction. Working draft.</p>
+  </div>
+
+</div>
+
+
+<script src="./config.js"></script>
+<script src="./bad-texts.js"></script>
+<script>
+/* ────────── Storage ────────── */
+// firstDraftLocked  — the reader's first committed revision of the bad-text
+// revised            — any further edits made on the after-window panel
+// originalBad        — the bad-text the reader saw (for reference / share)
+// arrangementId      — which bad-text was chosen (for downstream pages)
+const STORAGE_FIRST_LOCKED = 'beer.introduction.firstDraftLocked';
+const STORAGE_REVISED      = 'beer.introduction.revised';
+const STORAGE_ORIGINAL_BAD = 'beer.introduction.originalBad';
+const STORAGE_ARRANGEMENT  = 'beer.introduction.arrangementId';
+// Legacy keys from earlier prototype kept for one-time migration
+const LEGACY_FIRST         = 'beer.introduction.firstDraft';
+
+let hasClosedOnce = (localStorage.getItem(STORAGE_FIRST_LOCKED) !== null);
+
+const modal       = document.getElementById('modal');
+const arena       = document.getElementById('arena');
+const editor      = document.getElementById('editor');
+const wordCountEl = document.getElementById('wordCount');
+const beginBtn    = document.getElementById('beginBtn');
+const closeBtn    = document.getElementById('closeBtn');
+const afterWindow = document.getElementById('after-window');
+const committedDisplay = document.getElementById('committedDisplay');
+const revisedEl   = document.getElementById('revised');
+
+let currentBadText = null;  // selected bad-text record for this session
+
+/* ────────── Shape rendering ──────────
+   Five shapes drawn deliberately hard-to-name (the apophatic
+   move from the prior version is preserved). Each shape is a
+   small irregular polygon with colored & textured sides, scaled
+   and placed per the arrangement in the bad-text.
+*/
+const SIDE_COLORS = [
+  '#D94F2A', '#B87D2A', '#1B7A68',
+  '#3C5A78', '#7A4570', '#4A6B2C',
+];
+const TEXTURES = ['solid', 'dash', 'dot', 'double', 'wavy', 'hatch'];
+
+function seededRand(seed) {
+  return function () {
+    seed = (seed + 0x6D2B79F5) | 0;
+    let t = seed;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+// Five distinct shape templates. Each is a list of [x,y] vertices
+// in a local frame, centered at (0,0). The arena renderer scales
+// and rotates them when placing.
+const SHAPE_TEMPLATES = {
+  s1: [[-1.0, -0.5], [0.4, -0.9], [1.0, 0.3], [0.2, 0.9], [-0.7, 0.6]],
+  s2: [[-0.9, 0.0], [-0.3, -0.9], [0.6, -0.4], [0.9, 0.5], [0.0, 0.9], [-0.6, 0.5]],
+  s3: [[-0.6, -0.9], [0.9, -0.3], [0.5, 0.8], [-0.9, 0.6]],
+  s4: [[-0.9, -0.4], [-0.2, -0.9], [0.7, -0.6], [0.9, 0.2], [0.3, 0.9], [-0.5, 0.8], [-0.9, 0.3]],
+  s5: [[-0.7, -0.7], [0.4, -0.9], [0.9, 0.0], [0.6, 0.8], [-0.3, 0.6], [-0.9, 0.1]],
+};
+
+function renderArena(badText) {
+  const ns = 'http://www.w3.org/2000/svg';
+  const W = 500, H = 400;
+  const padding = 60;
+  arena.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  arena.innerHTML = '';
+
+  // Background arena outline — soft, just to anchor the eye
+  const frame = document.createElementNS(ns, 'rect');
+  frame.setAttribute('x', 1); frame.setAttribute('y', 1);
+  frame.setAttribute('width', W - 2); frame.setAttribute('height', H - 2);
+  frame.setAttribute('fill', '#FFFFFF');
+  frame.setAttribute('stroke', '#D8CDB8');
+  frame.setAttribute('stroke-width', '2');
+  frame.setAttribute('stroke-dasharray', '4 6');
+  frame.setAttribute('rx', '8');
+  arena.appendChild(frame);
+
+  // Per-arrangement seed so visuals are stable within a session
+  const seedKey = badText.id;
+  let seedNum = 0;
+  for (let i = 0; i < seedKey.length; i++) seedNum = (seedNum + seedKey.charCodeAt(i) * 7919) | 0;
+  const r = seededRand(seedNum);
+
+  const shapeOrder = ['s1', 's2', 's3', 's4', 's5'];
+  for (const sid of shapeOrder) {
+    const pos = badText.arrangement[sid];
+    if (!pos) continue;
+    const cx = padding + pos.x * (W - padding * 2);
+    const cy = padding + pos.y * (H - padding * 2);
+    const scale = 36 + r() * 8;
+    const tpl = SHAPE_TEMPLATES[sid];
+    const rot = (pos.rotation || 0) * Math.PI / 180;
+    const cos = Math.cos(rot), sin = Math.sin(rot);
+    const poly = tpl.map(([x, y]) => [
+      cx + (x * cos - y * sin) * scale,
+      cy + (x * sin + y * cos) * scale,
+    ]);
+
+    // Pale fill
+    const fillEl = document.createElementNS(ns, 'polygon');
+    fillEl.setAttribute('points', poly.map(p => p.join(',')).join(' '));
+    fillEl.setAttribute('fill', '#F8F3EA');
+    fillEl.setAttribute('stroke', 'none');
+    arena.appendChild(fillEl);
+
+    // Each side as its own colored & textured stroke
+    for (let i = 0; i < poly.length; i++) {
+      const [x1, y1] = poly[i];
+      const [x2, y2] = poly[(i + 1) % poly.length];
+      renderEdge(ns, x1, y1, x2, y2,
+        SIDE_COLORS[Math.floor(r() * SIDE_COLORS.length)],
+        TEXTURES[Math.floor(r() * TEXTURES.length)]);
+    }
+  }
+}
+
+function renderEdge(ns, x1, y1, x2, y2, color, texture) {
+  const line = document.createElementNS(ns, 'line');
+  line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+  line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+  line.setAttribute('stroke', color);
+  line.setAttribute('stroke-width', '3.5');
+  line.setAttribute('stroke-linecap', 'round');
+  switch (texture) {
+    case 'solid': break;
+    case 'hatch': line.setAttribute('stroke-dasharray', '6 3'); break;
+    case 'dash':  line.setAttribute('stroke-dasharray', '10 5'); break;
+    case 'dot':   line.setAttribute('stroke-dasharray', '1 5'); line.setAttribute('stroke-width', '4'); break;
+    case 'double': {
+      const dx = x2 - x1, dy = y2 - y1;
+      const len = Math.hypot(dx, dy) || 1;
+      const nx = -dy / len * 2, ny = dx / len * 2;
+      [[nx, ny], [-nx, -ny]].forEach(([ox, oy]) => {
+        const e = document.createElementNS(ns, 'line');
+        e.setAttribute('x1', x1 + ox); e.setAttribute('y1', y1 + oy);
+        e.setAttribute('x2', x2 + ox); e.setAttribute('y2', y2 + oy);
+        e.setAttribute('stroke', color); e.setAttribute('stroke-width', '2');
+        e.setAttribute('stroke-linecap', 'round');
+        arena.appendChild(e);
+      });
+      return;
+    }
+    case 'wavy': {
+      const dx = x2 - x1, dy = y2 - y1;
+      const len = Math.hypot(dx, dy) || 1;
+      const nx = -dy / len, ny = dx / len;
+      const segs = Math.max(4, Math.round(len / 7));
+      let d = `M ${x1} ${y1}`;
+      for (let i = 1; i <= segs; i++) {
+        const t = i / segs;
+        const amp = (i % 2 === 0 ? 1 : -1) * 2.2;
+        d += ` L ${x1 + dx * t + nx * amp} ${y1 + dy * t + ny * amp}`;
+      }
+      const path = document.createElementNS(ns, 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('stroke', color);
+      path.setAttribute('stroke-width', '2.5');
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke-linecap', 'round');
+      arena.appendChild(path);
+      return;
+    }
+  }
+  arena.appendChild(line);
+}
+
+/* ────────── Word count ────────── */
+function updateWordCount() {
+  const text = editor.value.trim();
+  const count = text ? text.split(/\s+/).length : 0;
+  wordCountEl.textContent = count === 1 ? '1 word' : `${count} words`;
+}
+
+/* ────────── Open / close ────────── */
+function openWindow() {
+  currentBadText = window.pickBadText();
+  renderArena(currentBadText);
+  if (!hasClosedOnce) {
+    const inProgress = localStorage.getItem(STORAGE_REVISED + '.inProgress');
+    editor.value = inProgress || currentBadText.text;
+  } else {
+    editor.value = currentBadText.text;
+  }
+  updateWordCount();
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => editor.focus(), 350);
+}
+
+function closeWindow() {
+  if (!hasClosedOnce && currentBadText) {
+    const draft = editor.value;
+    localStorage.setItem(STORAGE_FIRST_LOCKED, draft);
+    localStorage.setItem(STORAGE_ORIGINAL_BAD, currentBadText.text);
+    localStorage.setItem(STORAGE_ARRANGEMENT, currentBadText.id);
+    hasClosedOnce = true;
+    renderCommittedDraft(draft);
+    afterWindow.classList.add('shown');
+    const savedRevised = localStorage.getItem(STORAGE_REVISED);
+    if (savedRevised) revisedEl.value = savedRevised;
+    addReopenNote();
+  }
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+  if (hasClosedOnce) {
+    setTimeout(() => {
+      afterWindow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 200);
+  }
+}
+
+function renderCommittedDraft(text) {
+  if (text && text.trim()) {
+    committedDisplay.textContent = text;
+  } else {
+    committedDisplay.innerHTML = '<span class="draft-empty">(you did not change anything)</span>';
+  }
+}
+
+function addReopenNote() {
+  if (document.getElementById('reopenNote')) return;
+  const note = document.createElement('div');
+  note.id = 'reopenNote';
+  note.className = 'reopen-note';
+  note.innerHTML =
+    'You can open the window again if you want. The picture and the instructions that come up will be a different pair. ' +
+    'The first ones are gone. What you wrote is how they stay. ' +
+    '<button class="reopen-btn" id="reopenBtn">Open the window again</button>';
+  afterWindow.parentNode.insertBefore(note, afterWindow);
+  document.getElementById('reopenBtn').addEventListener('click', openWindow);
+}
+
+/* ────────── Persistence ────────── */
+editor.addEventListener('input', () => {
+  updateWordCount();
+  if (!hasClosedOnce) {
+    localStorage.setItem(STORAGE_REVISED + '.inProgress', editor.value);
+  }
+});
+revisedEl.addEventListener('input', () => {
+  localStorage.setItem(STORAGE_REVISED, revisedEl.value);
+});
+
+beginBtn.addEventListener('click', openWindow);
+closeBtn.addEventListener('click', closeWindow);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modal.classList.contains('open')) closeWindow();
+});
+
+/* ────────── Init ────────── */
+(function init() {
+  // One-time migration from earlier prototype's keys (legacy)
+  const legacy = localStorage.getItem(LEGACY_FIRST);
+  if (legacy && !localStorage.getItem(STORAGE_FIRST_LOCKED)) {
+    // Don't auto-promote legacy data; just keep it around. The reader
+    // gets a fresh start under the new design.
+  }
+
+  if (hasClosedOnce) {
+    const locked = localStorage.getItem(STORAGE_FIRST_LOCKED) || '';
+    renderCommittedDraft(locked);
+    afterWindow.classList.add('shown');
+    const savedRevised = localStorage.getItem(STORAGE_REVISED);
+    if (savedRevised) revisedEl.value = savedRevised;
+    addReopenNote();
+    beginBtn.textContent = 'Open the window again';
+  }
+})();
+</script>
+
+</body>
+</html>

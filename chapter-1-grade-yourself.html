@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technical Emotion Design — Grade Yourself</title>
+<style>
+:root {
+  --cream: #FAF7F2;
+  --ink: #251A10;
+  --ink-mid: #6B5344;
+  --ink-light: #A08070;
+  --coral: #D94F2A;
+  --brass: #B87D2A;
+  --teal: #1B7A68;
+  --grid: #EDE5D8;
+  --paper: #FDFAF6;
+  --rare: #7A4570;
+  --uncommon: #1B7A68;
+  --common: #B87D2A;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.72;
+  overflow-x: hidden;
+}
+
+/* ── Hero ─────────────────────────────────────────────── */
+.hero { padding: 88px 24px 40px; text-align: center; max-width: 720px; margin: 0 auto; }
+.eyebrow { font-size: .72em; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--brass); margin-bottom: 22px; }
+.hero h1 { font-size: clamp(2.2em,5.5vw,3.8em); font-weight: 900; line-height: 1.06; letter-spacing: -.025em; margin-bottom: 24px; }
+.hero h1 em { font-style: normal; color: var(--coral); }
+.hero .subtitle { font-size: 1.05em; color: var(--ink-mid); max-width: 540px; margin: 0 auto; line-height: 1.7; }
+
+/* ── Prose ─────────────────────────────────────────────── */
+.prose { max-width: 620px; margin: 0 auto; padding: 28px 24px; }
+.prose p { font-size: 1.05em; margin-bottom: 18px; line-height: 1.78; color: var(--ink); }
+.prose p:last-child { margin-bottom: 0; }
+.prose p.small { font-size: .94em; color: var(--ink-mid); font-style: italic; }
+
+/* ── The draft on display ──────────────────────────────── */
+.draft-display {
+  max-width: 720px; margin: 8px auto 24px; padding: 0 24px;
+}
+.draft-display .panel {
+  background: white; border-radius: 12px; padding: 20px 24px;
+  box-shadow: 0 1px 3px rgba(37,26,16,.05), 0 4px 14px rgba(37,26,16,.07);
+}
+.draft-label { font-size: .68em; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 10px; }
+.draft-text {
+  white-space: pre-wrap; word-wrap: break-word;
+  font-size: 1em; line-height: 1.65; color: var(--ink);
+}
+.draft-empty { color: var(--ink-light); font-style: italic; }
+
+/* ── Lens picker ───────────────────────────────────────── */
+.lens-section { max-width: 1040px; margin: 8px auto 24px; padding: 0 24px; }
+.lens-section .panel {
+  background: white; border-radius: 14px; padding: 26px 28px 24px;
+  box-shadow: 0 1px 3px rgba(37,26,16,.05), 0 4px 14px rgba(37,26,16,.07);
+}
+.lens-section h2 {
+  font-size: 1.4em; font-weight: 800; letter-spacing: -.015em; margin-bottom: 6px;
+}
+.lens-section .pick-help { font-size: .95em; color: var(--ink-mid); margin-bottom: 18px; line-height: 1.6; }
+
+.lens-tier {
+  display: flex; align-items: center; gap: 12px;
+  margin: 18px 0 10px;
+}
+.lens-tier-label {
+  font-size: .66em; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ink-light);
+}
+.lens-tier-rule { flex: 1; height: 1px; background: var(--grid); }
+.tier-common .lens-tier-label { color: var(--common); }
+.tier-uncommon .lens-tier-label { color: var(--uncommon); }
+.tier-rare .lens-tier-label { color: var(--rare); }
+
+.lens-row {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+}
+.lens {
+  border: 1.5px solid var(--grid); border-radius: 10px;
+  background: var(--paper); padding: 14px 16px 14px;
+  font-family: inherit; cursor: pointer;
+  transition: border-color .18s, box-shadow .18s, transform .15s;
+  text-align: left;
+}
+.lens:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,26,16,.08); }
+.lens.picked { border-color: var(--coral); background: white; box-shadow: 0 4px 16px rgba(217,79,42,.14); }
+.lens.disabled { opacity: .5; cursor: not-allowed; }
+.lens.disabled:hover { transform: none; box-shadow: none; }
+.lens-name {
+  font-size: 1.02em; font-weight: 700; letter-spacing: -.005em; color: var(--ink);
+  margin-bottom: 4px;
+}
+.lens-question {
+  font-size: .92em; color: var(--ink-mid); line-height: 1.55;
+}
+.lens-tier-tag {
+  display: inline-block;
+  font-size: .6em; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 100px; margin-bottom: 8px;
+}
+.tier-common .lens-tier-tag { background: rgba(184,125,42,.12); color: var(--common); }
+.tier-uncommon .lens-tier-tag { background: rgba(27,122,104,.12); color: var(--uncommon); }
+.tier-rare .lens-tier-tag { background: rgba(122,69,112,.12); color: var(--rare); }
+
+.lens-counter {
+  margin-top: 18px; font-size: .92em; color: var(--ink-mid); font-style: italic; text-align: center;
+}
+
+/* ── Grading area ──────────────────────────────────────── */
+.grading-section {
+  max-width: 720px; margin: 8px auto 32px; padding: 0 24px;
+  display: none;
+}
+.grading-section.shown { display: block; }
+.grading-section .panel {
+  background: white; border-radius: 14px; padding: 26px 28px;
+  box-shadow: 0 1px 3px rgba(37,26,16,.05), 0 4px 14px rgba(37,26,16,.07);
+  margin-bottom: 16px;
+}
+.grading-section h2 {
+  font-size: 1.3em; font-weight: 800; letter-spacing: -.015em; margin-bottom: 12px;
+}
+.grading-lens {
+  padding: 18px 0;
+}
+.grading-lens + .grading-lens { border-top: 1px solid var(--grid); margin-top: 6px; }
+.grading-lens .lens-name {
+  font-size: 1.1em; font-weight: 800; margin-bottom: 6px; letter-spacing: -.01em;
+}
+.grading-lens .lens-question {
+  font-size: 1em; color: var(--ink-mid); line-height: 1.65; margin-bottom: 14px;
+}
+.grading-lens .prompt {
+  font-size: .96em; color: var(--ink); line-height: 1.65; margin-bottom: 12px;
+  padding-left: 14px; border-left: 2px solid var(--grid);
+}
+.grading-lens textarea {
+  width: 100%; min-height: 110px;
+  border: 1.5px solid var(--grid); border-radius: 8px;
+  padding: 12px 14px; font-size: .98em; font-family: inherit; line-height: 1.65;
+  color: var(--ink); background: var(--cream); resize: vertical;
+  outline: none; transition: border-color .18s;
+}
+.grading-lens textarea:focus { border-color: var(--brass); background: white; }
+
+/* ── Revision area ─────────────────────────────────────── */
+.revise-section {
+  max-width: 720px; margin: 8px auto 32px; padding: 0 24px;
+  display: none;
+}
+.revise-section.shown { display: block; }
+.revise-section .panel {
+  background: white; border-radius: 14px; padding: 24px 28px;
+  box-shadow: 0 1px 3px rgba(37,26,16,.05), 0 4px 14px rgba(37,26,16,.07);
+}
+.revise-section h2 {
+  font-size: 1.3em; font-weight: 800; letter-spacing: -.015em; margin-bottom: 10px;
+}
+.revise-section .lead { font-size: 1em; color: var(--ink-mid); margin-bottom: 16px; line-height: 1.65; }
+.revise-section textarea {
+  width: 100%; min-height: 200px;
+  border: 1.5px solid var(--grid); border-radius: 8px;
+  padding: 14px 16px; font-size: 1em; font-family: inherit; line-height: 1.65;
+  color: var(--ink); background: var(--cream); resize: vertical;
+  outline: none; transition: border-color .18s;
+}
+.revise-section textarea:focus { border-color: var(--brass); background: white; }
+.hint { font-size: .9em; color: var(--ink-light); font-style: italic; margin-top: 10px; }
+
+/* ── Share section ─────────────────────────────────────── */
+.share-section {
+  max-width: 720px; margin: 16px auto 32px; padding: 0 24px;
+  display: none;
+}
+.share-section.shown { display: block; }
+.share-section .panel {
+  background: white; border-radius: 14px; padding: 22px 24px;
+  box-shadow: 0 1px 3px rgba(37,26,16,.05), 0 4px 14px rgba(37,26,16,.07);
+}
+.share-section h2 {
+  font-size: 1.2em; font-weight: 800; letter-spacing: -.015em; margin-bottom: 10px;
+}
+.share-options {
+  display: flex; flex-direction: column; gap: 8px;
+  margin-bottom: 14px;
+}
+.share-option {
+  display: flex; align-items: center; gap: 10px;
+  font-size: .96em; color: var(--ink); cursor: pointer;
+}
+.share-option input[type="checkbox"] {
+  width: 16px; height: 16px; accent-color: var(--coral); cursor: pointer;
+}
+.share-row {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--grid);
+}
+.share-btn {
+  background: white; border: 1.5px solid var(--grid); border-radius: 100px;
+  padding: 11px 24px; font-size: .94em; font-weight: 600; font-family: inherit;
+  color: var(--ink); cursor: pointer;
+  transition: border-color .18s, color .18s, box-shadow .18s, transform .18s;
+  box-shadow: 0 1px 4px rgba(37,26,16,.06);
+}
+.share-btn:hover { border-color: var(--brass); color: var(--brass); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(184,125,42,.16); }
+.share-msg { font-size: .88em; color: var(--teal); font-style: italic; opacity: 0; transition: opacity .3s ease; }
+.share-msg.shown { opacity: 1; }
+
+/* ── Footer ────────────────────────────────────────────── */
+.footer { padding: 32px 24px 64px; text-align: center; }
+.footer p { font-size: .84em; color: var(--ink-light); font-style: italic; }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="eyebrow">Technical Emotion Design</div>
+  <h1>Grade <em>yourself</em></h1>
+  <p class="subtitle">Pick two ways of reading your instructions. Walk through each. Revise what you find.</p>
+</section>
+
+<section class="prose">
+  <p>You wrote instructions on the introduction page. You watched your writing show up as a paper doll. Now you read what you wrote through your own choice of lenses.</p>
+  <p>Pick the two that interest you. Read your draft through each. Notice what they reveal. Then revise if you want to.</p>
+  <p class="small">The two you pick are part of the work. Two readers who care about different things will pick different pairs. Both can be right.</p>
+</section>
+
+
+<div class="draft-display">
+  <div class="panel">
+    <div class="draft-label">Your instructions, from the introduction</div>
+    <div class="draft-text" id="draftText"><span class="draft-empty">You did not write anything on the introduction page yet.</span></div>
+  </div>
+</div>
+
+
+<section class="lens-section">
+  <div class="panel">
+    <h2>Pick two lenses</h2>
+    <p class="pick-help">Read each one. Click two that you want to read your draft through.</p>
+
+    <div class="lens-tier tier-common">
+      <span class="lens-tier-label">Common</span>
+      <span class="lens-tier-rule"></span>
+    </div>
+    <div class="lens-row" data-tier="common">
+      <button class="lens" data-lens="avoiding-nos" data-tier="common">
+        <div class="lens-tier-tag">Common</div>
+        <div class="lens-name">Avoiding nos</div>
+        <div class="lens-question">Find your don'ts. Can any of them become dos?</div>
+      </button>
+      <button class="lens" data-lens="adding-whys" data-tier="common">
+        <div class="lens-tier-tag">Common</div>
+        <div class="lens-name">Adding whys</div>
+        <div class="lens-question">Pick a direction. Can you add a because, or a so that?</div>
+      </button>
+    </div>
+
+    <div class="lens-tier tier-uncommon">
+      <span class="lens-tier-label">Uncommon</span>
+      <span class="lens-tier-rule"></span>
+    </div>
+    <div class="lens-row" data-tier="uncommon">
+      <button class="lens" data-lens="when-stuck" data-tier="uncommon">
+        <div class="lens-tier-tag">Uncommon</div>
+        <div class="lens-name">What to do when stuck</div>
+        <div class="lens-question">If the follower gets confused, do they have anywhere to go?</div>
+      </button>
+      <button class="lens" data-lens="naming-needs" data-tier="uncommon">
+        <div class="lens-tier-tag">Uncommon</div>
+        <div class="lens-name">Naming what they need</div>
+        <div class="lens-question">Are you assuming a tool or a way of seeing that they may not have?</div>
+      </button>
+    </div>
+
+    <div class="lens-tier tier-rare">
+      <span class="lens-tier-label">Rare</span>
+      <span class="lens-tier-rule"></span>
+    </div>
+    <div class="lens-row" data-tier="rare">
+      <button class="lens" data-lens="order-of-arrival" data-tier="rare">
+        <div class="lens-tier-tag">Rare</div>
+        <div class="lens-name">Order of arrival</div>
+        <div class="lens-question">Does the room come before the furniture?</div>
+      </button>
+      <button class="lens" data-lens="room-to-be-wrong" data-tier="rare">
+        <div class="lens-tier-tag">Rare</div>
+        <div class="lens-name">Room to be wrong</div>
+        <div class="lens-question">If the follower gets it wrong, do they know it's okay?</div>
+      </button>
+    </div>
+
+    <div class="lens-counter" id="lensCounter">Pick two.</div>
+  </div>
+</section>
+
+
+<section class="grading-section" id="grading">
+  <div class="panel">
+    <h2>Walk through each</h2>
+    <p style="font-size:.98em; color:var(--ink-mid); margin-bottom:8px; line-height:1.65;">Your draft is above. Hold each lens against it and notice what comes up. Notes are for you. They stay in this browser.</p>
+    <div id="gradingLenses"></div>
+  </div>
+</section>
+
+
+<section class="revise-section" id="revise">
+  <div class="panel">
+    <h2>Revise</h2>
+    <p class="lead">Take what you noticed and rewrite. Or don't. The first draft is also fine.</p>
+    <textarea id="reviseText" placeholder="Rewrite here. Your original is preserved above."></textarea>
+    <div class="hint">Saved in your browser. Nothing leaves this page.</div>
+  </div>
+</section>
+
+
+<section class="share-section" id="share">
+  <div class="panel">
+    <h2>Share</h2>
+    <p style="font-size:.95em; color:var(--ink-mid); margin-bottom:14px; line-height:1.6;">If you want to send this to someone, pick what to include.</p>
+    <div class="share-options">
+      <label class="share-option"><input type="checkbox" id="incRevised" checked> The revised version</label>
+      <label class="share-option"><input type="checkbox" id="incOriginal"> The original draft too</label>
+      <label class="share-option"><input type="checkbox" id="incLenses" checked> The two lenses you picked</label>
+      <label class="share-option"><input type="checkbox" id="incNotes"> Your grading notes</label>
+      <label class="share-option"><input type="checkbox" id="incDoll"> Your paper doll</label>
+    </div>
+    <div class="share-row">
+      <button class="share-btn" id="shareBtn">Copy to clipboard</button>
+      <span class="share-msg" id="shareMsg"></span>
+    </div>
+  </div>
+</section>
+
+
+<div class="footer">
+  <p>Technical Emotion Design &mdash; Chapter One. Working draft.</p>
+</div>
+
+
+<script src="./config.js"></script>
+<script>
+/* ────────── Storage keys ────────── */
+const STORAGE_INTRO_FIRST = 'beer.introduction.firstDraftLocked';
+const STORAGE_INTRO_REVISED = 'beer.introduction.revised';
+const STORAGE_WORN = 'beer.chapter1.worn'; // from paper-doll page
+const STORAGE_PICKED = 'beer.chapter1.lenses.picked';
+const STORAGE_NOTES = 'beer.chapter1.lenses.notes'; // {lensId: note}
+const STORAGE_REVISED = 'beer.chapter1.lenses.revised';
+
+/* ────────── Lens catalog ────────── */
+const LENSES = {
+  'avoiding-nos': {
+    name: 'Avoiding nos',
+    tier: 'common',
+    question: "Find your don'ts. Can any of them become dos?",
+    prompt: "Look through your draft for any don't, never, do not, avoid, or skip. For each one, try writing the do version. Sometimes the do is easy to find. Sometimes it is not. Notice which is which.",
+  },
+  'adding-whys': {
+    name: 'Adding whys',
+    tier: 'common',
+    question: "Pick a direction. Can you add a because, or a so that?",
+    prompt: "Pick two or three of your directions. For each, try adding a because, a so that, or a so. Notice which ones get easier when the follower knows the reason, and which ones the reason did not seem to need.",
+  },
+  'when-stuck': {
+    name: 'What to do when stuck',
+    tier: 'uncommon',
+    question: "If the follower gets confused, do they have anywhere to go?",
+    prompt: "Imagine the follower hits something unclear. Re-read your draft as if you were them in that moment. Is there anything telling them what to try first, or how to keep going? If not, can you add one sentence?",
+  },
+  'naming-needs': {
+    name: 'Naming what they need',
+    tier: 'uncommon',
+    question: "Are you assuming a tool or a way of seeing that they may not have?",
+    prompt: "Re-read for things you assumed the follower had. A way of seeing, a name for a thing, a sense of how big something should be. Mark anything you assumed. You can either name it or remove the dependency.",
+  },
+  'order-of-arrival': {
+    name: 'Order of arrival',
+    tier: 'rare',
+    question: "Does the room come before the furniture?",
+    prompt: "Read your draft in the order it lands. Does the follower learn what kind of thing this is before they learn the parts of it? Does the picture come before the placements? You can re-order if it helps.",
+  },
+  'room-to-be-wrong': {
+    name: 'Room to be wrong',
+    tier: 'rare',
+    question: "If the follower gets it wrong, do they know it's okay?",
+    prompt: "Re-read your draft as if you were going to fail at it. Is there anywhere that gives the follower space to be uncertain without it becoming a crisis? Is there room to be wrong and keep going? You can add a sentence that gives them that, if you want.",
+  },
+};
+
+/* ────────── Load helpers ────────── */
+function getDraftText() {
+  const r = localStorage.getItem(STORAGE_INTRO_REVISED);
+  const f = localStorage.getItem(STORAGE_INTRO_FIRST);
+  if (r && r.trim()) return r;
+  if (f && f.trim()) return f;
+  return '';
+}
+
+function loadPicked() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_PICKED) || '[]'); }
+  catch (e) { return []; }
+}
+
+function savePicked(arr) {
+  localStorage.setItem(STORAGE_PICKED, JSON.stringify(arr));
+}
+
+function loadNotes() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_NOTES) || '{}'); }
+  catch (e) { return {}; }
+}
+
+function saveNotes(obj) {
+  localStorage.setItem(STORAGE_NOTES, JSON.stringify(obj));
+}
+
+function loadWorn() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_WORN) || '{}'); }
+  catch (e) { return {}; }
+}
+
+/* ────────── Render ────────── */
+const draftTextEl = document.getElementById('draftText');
+const lensButtons = document.querySelectorAll('.lens');
+const counterEl = document.getElementById('lensCounter');
+const gradingEl = document.getElementById('grading');
+const gradingLensesEl = document.getElementById('gradingLenses');
+const reviseEl = document.getElementById('revise');
+const reviseText = document.getElementById('reviseText');
+const shareEl = document.getElementById('share');
+const shareBtn = document.getElementById('shareBtn');
+const shareMsg = document.getElementById('shareMsg');
+
+function renderDraft() {
+  const text = getDraftText();
+  if (text) {
+    draftTextEl.textContent = text;
+  } else {
+    draftTextEl.innerHTML = '<span class="draft-empty">You did not write anything on the introduction page yet. You can still pick lenses and try them on something else if you like.</span>';
+  }
+}
+
+function renderLensPicks() {
+  const picked = loadPicked();
+  lensButtons.forEach(btn => {
+    const lensId = btn.dataset.lens;
+    btn.classList.toggle('picked', picked.includes(lensId));
+    // disable un-picked ones once 2 are picked
+    if (picked.length >= 2 && !picked.includes(lensId)) {
+      btn.classList.add('disabled');
+    } else {
+      btn.classList.remove('disabled');
+    }
+  });
+
+  // counter
+  if (picked.length === 0) counterEl.textContent = 'Pick two.';
+  else if (picked.length === 1) counterEl.textContent = 'One picked. One more.';
+  else counterEl.textContent = 'Two picked. Walk through them below.';
+
+  // grading section
+  if (picked.length === 2) {
+    gradingEl.classList.add('shown');
+    renderGrading(picked);
+    reviseEl.classList.add('shown');
+    shareEl.classList.add('shown');
+  } else {
+    gradingEl.classList.remove('shown');
+    reviseEl.classList.remove('shown');
+    shareEl.classList.remove('shown');
+  }
+}
+
+function renderGrading(pickedIds) {
+  const notes = loadNotes();
+  gradingLensesEl.innerHTML = '';
+  for (const id of pickedIds) {
+    const lens = LENSES[id];
+    const wrap = document.createElement('div');
+    wrap.className = 'grading-lens';
+    wrap.innerHTML = `
+      <div class="lens-name">${lens.name}</div>
+      <div class="lens-question">${lens.question}</div>
+      <div class="prompt">${lens.prompt}</div>
+      <textarea data-lens-id="${id}" placeholder="Your notes."></textarea>
+    `;
+    const ta = wrap.querySelector('textarea');
+    ta.value = notes[id] || '';
+    ta.addEventListener('input', () => {
+      const n = loadNotes();
+      n[id] = ta.value;
+      saveNotes(n);
+    });
+    gradingLensesEl.appendChild(wrap);
+  }
+}
+
+/* ────────── Wire up ────────── */
+lensButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const lensId = btn.dataset.lens;
+    let picked = loadPicked();
+    if (picked.includes(lensId)) {
+      // unpick
+      picked = picked.filter(x => x !== lensId);
+    } else if (picked.length < 2) {
+      picked.push(lensId);
+    } else {
+      return; // already 2, ignore click on un-picked
+    }
+    savePicked(picked);
+    renderLensPicks();
+  });
+});
+
+reviseText.value = localStorage.getItem(STORAGE_REVISED) || '';
+reviseText.addEventListener('input', () => {
+  localStorage.setItem(STORAGE_REVISED, reviseText.value);
+});
+
+/* ────────── Share ────────── */
+function buildShareText() {
+  const cfg = window.HANDBOOK_CONFIG || { shortName: 'Technical Emotion Design', homeUrl: '' };
+  const picked = loadPicked();
+  const notes = loadNotes();
+  const revised = (localStorage.getItem(STORAGE_REVISED) || '').trim();
+  const original = getDraftText().trim();
+  const worn = loadWorn();
+
+  const wantRevised = document.getElementById('incRevised').checked;
+  const wantOriginal = document.getElementById('incOriginal').checked;
+  const wantLenses = document.getElementById('incLenses').checked;
+  const wantNotes = document.getElementById('incNotes').checked;
+  const wantDoll = document.getElementById('incDoll').checked;
+
+  // Paper doll part names (must mirror the catalog from the paper-doll page).
+  // We keep this list minimal — we only emit names of worn parts.
+  const PART_NAMES = {
+    'wide-hat': 'wide-brim hat', 'small-cap': 'small cap',
+    'round-glasses': 'round glasses', 'square-glasses': 'square glasses',
+    'notebook': 'notebook', 'lantern': 'lantern',
+    'rope': 'coiled rope', 'compass': 'compass',
+    'scarf': 'soft scarf', 'thermos': 'thermos',
+    'clipboard': 'clipboard', 'blanket': 'folded blanket',
+  };
+
+  const lines = [];
+  lines.push(`From ${cfg.shortName}.`);
+  if (cfg.homeUrl) lines.push(cfg.homeUrl);
+  lines.push('');
+
+  if (wantLenses && picked.length) {
+    lines.push(`Lenses I picked: ${picked.map(id => LENSES[id].name).join(', ')}.`);
+    lines.push('');
+  }
+
+  if (wantDoll) {
+    const wornNames = Object.keys(worn).filter(id => worn[id]).map(id => PART_NAMES[id] || id);
+    lines.push(wornNames.length
+      ? `Paper doll: ${wornNames.join(', ')}.`
+      : 'Paper doll: (nothing on yet).');
+    lines.push('');
+  }
+
+  if (wantRevised && revised) {
+    lines.push('Revised:');
+    lines.push(revised);
+    lines.push('');
+  }
+
+  if (wantOriginal && original) {
+    lines.push('Original:');
+    lines.push(original);
+    lines.push('');
+  }
+
+  if (wantNotes && picked.length) {
+    const any = picked.some(id => (notes[id] || '').trim());
+    if (any) {
+      lines.push('Notes:');
+      for (const id of picked) {
+        const n = (notes[id] || '').trim();
+        if (n) {
+          lines.push(`— ${LENSES[id].name}: ${n}`);
+        }
+      }
+      lines.push('');
+    }
+  }
+
+  return lines.join('\n').trim();
+}
+
+shareBtn.addEventListener('click', async () => {
+  const text = buildShareText();
+  try {
+    await navigator.clipboard.writeText(text);
+    shareMsg.textContent = 'copied to your clipboard';
+    shareMsg.classList.add('shown');
+    setTimeout(() => shareMsg.classList.remove('shown'), 2400);
+  } catch (err) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+    shareMsg.textContent = 'copied';
+    shareMsg.classList.add('shown');
+    setTimeout(() => shareMsg.classList.remove('shown'), 2400);
+  }
+});
+
+/* ────────── Init ────────── */
+renderDraft();
+renderLensPicks();
+</script>
+
+</body>
+</html>
