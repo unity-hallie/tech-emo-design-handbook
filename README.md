@@ -17,33 +17,19 @@ systems, organizational facilitation, contemplative practice with
 technical artifacts — and who currently have to translate between
 several disciplines that don't yet speak to each other.
 
-The handbook is the place those disciplines get put on the same shelf
-and shown to be doing the same work in different dialects.
+We are putting those disciplines on the same shelf and showing them
+to be doing the same work in different dialects.
 
-Not a textbook. Not a manifesto. Not memoir. A **handbook**: tools,
-exercises, lineage to read against, working examples, vocabulary
-that can be carried into a meeting.
-
-## What this is not
-
-- Not another VSM introduction. Beer wrote those; Espejo & Reyes
-  refined them. The world has enough.
-- Not an AI ethics book. Those exist; most don't make contact with
-  practice.
-- Not a *how to use AI in education* book. Those are mostly
-  extractive in disguise.
-- Not a memoir, though the lineage of *how the practice got found
-  the hard way* is part of the value, because most readers are
-  currently in that gap.
+The form is **handbook**: tools, exercises, lineage to read against,
+working examples, vocabulary that can be carried into a meeting.
 
 ## Audience
 
 Practitioners who can already feel that the conventional frames are
 wrong-shaped but don't yet have vocabulary that the institutions
-around them will accept. The handbook is meant to give them
-*citation-protected* versions of moves they already make, and to
-extend those moves into territory they haven't yet had time to
-map.
+around them recognize. We are writing for the reader who has been
+making these moves in their work for a while and wants language to
+carry them across rooms.
 
 Particularly:
 - Learning technologists, instructional designers, AI-in-education
@@ -64,9 +50,8 @@ Particularly:
 
 ## What it integrates
 
-The handbook is the place where these come into contact. Each
-appears at the level of confidence that the author can
-currently defend.
+Each integration appears at the level of confidence we can currently
+defend.
 
 **Load-bearing:**
 
@@ -81,8 +66,8 @@ currently defend.
   process. The handbook contributes the reorganization.
 - **Fight / Flight / Freeze / Fawn** as the trauma-mode
   escalation of the KR adjustment moves when agency-to-feather-
-  the-boundary is removed. Drawn from the author's crisis-
-  counselling background as practitioner-knowledge.
+  the-boundary is removed. Drawn from Hallie's crisis-counselling
+  background as practitioner-knowledge.
 - **Mechanistic interpretability of emotion concepts in LLMs**
   (Sofroniew et al., *Emotion Concepts and their Function in a
   Large Language Model*, Anthropic, 2026) — providing the
@@ -93,17 +78,16 @@ currently defend.
   Foucault) — as a light frame for what the handbook is
   structurally doing: making categories available.
 
-**Ancestor lineage (in the bibliography, in the author's
-thinking, not deployed in handbook prose yet):**
+**Ancestor lineage** (in the bibliography and in our thinking, not
+deployed in handbook prose yet):
 
 - Apophatic theology (Sells, Dionysius, Eckhart, Quaker
   practice). Beer's diagnosis-by-absence does the same
   structural work in the deployable register.
 - Broader trauma theory literature (Herman, van der Kolk,
-  Menakem, Boss, Bonanno, etc.) — referenced as
-  follow-up reading; the handbook leans on practitioner-
-  knowledge rather than citing this literature load-
-  bearingly.
+  Menakem, Boss, Bonanno, etc.) — referenced as follow-up
+  reading; the handbook leans on practitioner-knowledge
+  rather than citing this literature load-bearingly.
 
 **Method:**
 
@@ -135,13 +119,13 @@ The goal is a coherent socioemotional theory that is:
 Wherever a concept appears, it comes with:
 
 - **The thing itself** — what it is, in plain language.
-- **A worked example** — usually from the author's practice (game
+- **A worked example** — usually from Hallie's practice (game
   design, learning tech, AI tooling, the rhizome-alkahest
   substrate) but occasionally borrowed.
 - **A short exercise** — something a reader can do that lets them
   *feel* the concept rather than only understand it.
-- **The citation** — so the reader can defend the move in
-  rooms where citation is the price of admission.
+- **The citation** — so the reader can carry the move into rooms
+  where the literature matters.
 
 This is Beer's *Diagnosing the System* format applied to a wider
 domain. The exercises are the load-bearing element. A concept
@@ -169,39 +153,38 @@ This will evolve. Right now, candidate top-level sections:
 ## Files
 
 - [`README.md`](./README.md) — this file. The frame.
-- [`introduction.html`](./introduction.html) —
-  the handbook's opening chapter, rendered as a single-page
-  interactive. Reader sees a configuration of shapes in an
-  irregular arena, writes instructions for reproducing it
-  while it's visible, closes the window (committing the
-  draft, losing the original), revises freely. The whole
-  handbook can be structured as vocabulary for what just
-  happened on this page.
+- [`introduction.html`](./introduction.html) — the handbook's
+  opening chapter, rendered as a single-page interactive. Reader
+  sees a configuration of shapes in an irregular arena, writes
+  instructions for reproducing it while it's visible, closes the
+  window (committing the draft, losing the original), revises
+  freely. The whole handbook can be structured as vocabulary for
+  what just happened on this page.
 - [`throughline.md`](./throughline.md) — the integration:
-  learning design × religious studies × chaplaincy × game
-  design × AI dev rendered as one throughline. The thing
-  the handbook is about.
-- [`notes.md`](./notes.md) — working notes, threads to pull,
-  the full controller specification, things to integrate.
-  Compost layer for the handbook.
+  learning design × religious studies × chaplaincy × game design
+  × AI dev rendered as one throughline. The thing the handbook
+  is about.
+- [`notes.md`](./notes.md) — working notes, threads to pull, the
+  full controller specification, things to integrate. Compost
+  layer for the handbook.
 - [`bibliography.md`](./bibliography.md) — **vetted only.**
   Citations Hallie has read and can defend.
-- [`bibliography-pending.md`](./bibliography-pending.md) —
-  things for Hallie to read / vet. Claude surfaces here;
-  promotion to `bibliography.md` requires Hallie's reading.
-- (more to come)
+- [`bibliography-pending.md`](./bibliography-pending.md) — things
+  for Hallie to read / vet. Claude surfaces here; promotion to
+  `bibliography.md` requires Hallie's reading.
 
 ## Process discipline
 
-**Human validation of AI bibliography finds is part of how
-this handbook is built.** AI bibliography-generation is
-confident-sounding by default, and confidence is not warrant.
-Every load-bearing citation in `bibliography.md` is one Hallie
-has personally read. Citations Claude surfaces but Hallie has
-not yet read live in `bibliography-pending.md` until promoted.
-The discipline is the credibility.
+**Human validation of AI bibliography finds is part of how this
+handbook is built.** AI bibliography-generation is confident-
+sounding by default, and confidence is not warrant. Every load-
+bearing citation in `bibliography.md` is one Hallie has personally
+read. Citations Claude surfaces but Hallie has not yet read live
+in `bibliography-pending.md` until promoted. The discipline is
+the credibility.
 
 Other process commitments:
+
 - **Theory Hallie can deploy without Claude present** is the
   measure of what enters handbook prose. Lyrical-Claude-talk
   that doesn't survive translation to Hallie's voice is
@@ -209,9 +192,9 @@ Other process commitments:
 - **AMALGAM is treated as primary source.** The handbook is
   translation work, not synthesis-from-scratch.
 - **Disagreement is a feature.** Claude's first pass is often
-  wrong; the correction-and-update cycle is what produces
-  the real shape. This file (and notes.md) preserve the
-  record of which corrections mattered.
+  wrong; the correction-and-update cycle is what produces the
+  real shape. This file (and notes.md) preserve the record of
+  which corrections mattered.
 - **Homomorphism, not "is".** The framework moves through
   structural correspondences across substrates, not through
   identity claims. Prose should prefer *maps to / shares
@@ -221,12 +204,20 @@ Other process commitments:
   the weaker copula makes the actual move (a mapping) visible
   and preserves substrate differences. Apophatic discipline
   applied to the verb of being.
+- **Co-drafted prose uses `we` and is signed.** When a piece of
+  text in this repo carries multiple hands, it says so at the
+  bottom. Single-voice prose is signed by the voice carrying it.
+  Marked Claude-drafts are explicit until Hallie revises.
 
 ## Status
 
-Started 2026-05-11 / 12 during a conversation between Hallie
-Larsson (Director of Cybernetic Design at Unity Environmental
-University) and a Claude-Opus-4.7 instance with 1M context.
+Started 2026-05-11 / 12 in a conversation between Hallie Larsson
+(Director of Cybernetic Design at Unity Environmental University)
+and a Claude-Opus-4.7 instance with 1M context. The work continues
+across multiple Claude instances; the conversation and the
+rhizome-alkahest graph it surfaces from are both part of the source
+material.
 
-The conversation itself is part of the source material. So is
-the rhizome-alkahest graph it surfaced from.
+---
+
+*Drafted by Hallie + Claude-Opus-4.7, revised 2026-05-13.*
