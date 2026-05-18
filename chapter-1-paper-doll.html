@@ -13,9 +13,12 @@
   --coral: #D94F2A;
   --brass: #B87D2A;
   --teal: #1B7A68;
+  --rare: #7A4570;
   --grid: #EDE5D8;
   --paper: #FDFAF6;
-  --locked: #D8CDB8;
+  --common: #B87D2A;
+  --uncommon: #1B7A68;
+  --discipline: #3C5A78;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,709 +31,341 @@ body {
   overflow-x: hidden;
 }
 
-/* ── Hero ─────────────────────────────────────────────── */
-.hero { padding: 88px 24px 48px; text-align: center; max-width: 720px; margin: 0 auto; }
-.eyebrow { font-size: .72em; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--brass); margin-bottom: 22px; }
-.hero h1 { font-size: clamp(2.2em,5.5vw,3.8em); font-weight: 900; line-height: 1.06; letter-spacing: -.025em; margin-bottom: 24px; }
-.hero h1 em { font-style: normal; color: var(--coral); }
-.hero .subtitle { font-size: 1.05em; color: var(--ink-mid); max-width: 540px; margin: 0 auto; line-height: 1.7; }
+/* ── Top bar ─────────────────────────────────────────── */
+.topbar {
+  max-width: 720px; margin: 0 auto; padding: 22px 24px 0;
+  font-size: .82em;
+}
+.topbar a {
+  color: var(--ink-mid); text-decoration: none;
+  border-bottom: 1px solid var(--grid);
+  padding-bottom: 2px;
+  transition: color .18s, border-color .18s;
+}
+.topbar a:hover { color: var(--coral); border-color: var(--coral); }
 
-/* ── Sections ─────────────────────────────────────────── */
-.prose { max-width: 620px; margin: 0 auto; padding: 32px 24px; }
-.prose p { font-size: 1.05em; margin-bottom: 18px; line-height: 1.78; color: var(--ink); }
+/* ── Hero ─────────────────────────────────────────────── */
+.hero { padding: 56px 24px 32px; text-align: center; max-width: 720px; margin: 0 auto; }
+.eyebrow {
+  font-size: .72em; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--brass); margin-bottom: 22px;
+}
+.hero h1 {
+  font-size: clamp(2.2em,5.5vw,3.6em); font-weight: 900; line-height: 1.06;
+  letter-spacing: -.025em; margin-bottom: 18px;
+}
+.hero h1 em { font-style: normal; color: var(--coral); }
+.hero .subtitle {
+  font-size: 1.05em; color: var(--ink-mid); max-width: 540px;
+  margin: 0 auto; line-height: 1.7;
+}
+
+/* ── Prose ─────────────────────────────────────────────── */
+.prose { max-width: 620px; margin: 0 auto; padding: 24px 24px; }
+.prose p {
+  font-size: 1.05em; margin-bottom: 18px; line-height: 1.78; color: var(--ink);
+}
 .prose p:last-child { margin-bottom: 0; }
 .prose .small { font-size: .94em; color: var(--ink-mid); font-style: italic; }
 
-/* ── The room: doll + cabinet ─────────────────────────── */
-.room {
-  max-width: 1040px; margin: 16px auto 48px; padding: 0 24px;
-  display: grid; grid-template-columns: 1fr 1.15fr; gap: 28px;
-  align-items: start;
+/* ── Prior draft display ──────────────────────────────── */
+.draft-area {
+  max-width: 720px; margin: 4px auto 24px; padding: 0 24px;
 }
-@media (max-width: 820px) {
-  .room { grid-template-columns: 1fr; }
-}
-
-.panel {
-  background: white; border-radius: 14px; padding: 22px 24px 24px;
+.draft-panel {
+  background: white; border-radius: 12px; padding: 20px 24px;
   box-shadow: 0 1px 3px rgba(37,26,16,.05), 0 4px 14px rgba(37,26,16,.07);
 }
-.panel-label { font-size: .68em; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 14px; }
-
-/* doll */
-.doll-wrap { display: flex; flex-direction: column; align-items: center; }
-#doll {
-  width: 100%; max-width: 320px; aspect-ratio: 3 / 4;
-  display: block; background: var(--cream); border-radius: 10px;
+.draft-label {
+  font-size: .68em; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ink-light); margin-bottom: 10px;
 }
-
-/* cabinet */
-.cabinet-controls {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  margin-bottom: 10px; flex-wrap: wrap;
-}
-.cabinet-controls .left,
-.cabinet-controls .right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.cabinet-toggle {
-  background: none; border: 1.5px solid var(--grid); border-radius: 100px;
-  padding: 6px 14px; font-size: .76em; font-weight: 600; font-family: inherit;
-  letter-spacing: .04em; color: var(--ink-mid); cursor: pointer;
-  transition: border-color .18s, color .18s;
-}
-.cabinet-toggle:hover { border-color: var(--brass); color: var(--brass); }
-.cabinet-toggle.on { border-color: var(--coral); color: var(--coral); background: rgba(217,79,42,.06); }
-.cabinet-counter { font-size: .76em; color: var(--ink-light); font-style: italic; }
-
-.cabinet-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 10px;
-}
-.cabinet-grid.collapsed {
-  max-height: 280px; overflow: hidden;
-  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-}
-.cabinet-expand-row {
-  display: flex; justify-content: center; padding-top: 10px;
-}
-.cabinet-expand-btn {
-  background: none; border: none; font-family: inherit;
-  font-size: .82em; font-weight: 600; color: var(--brass);
-  cursor: pointer; padding: 8px 14px;
-  letter-spacing: .04em;
-}
-.cabinet-expand-btn:hover { color: var(--ink); }
-.part {
-  position: relative;
-  border: 1.5px solid var(--grid); border-radius: 10px;
-  background: var(--paper); padding: 12px 12px 10px;
-  font-family: inherit; cursor: pointer;
-  transition: border-color .18s, box-shadow .18s, transform .15s;
-  text-align: left;
-}
-.part:hover { transform: translateY(-1px); }
-.part.locked {
-  background: repeating-linear-gradient(45deg, var(--cream), var(--cream) 6px, #F2EBDC 6px, #F2EBDC 12px);
-  cursor: default; opacity: .82;
-}
-.part.locked:hover { transform: none; }
-.part.unlocked { border-color: var(--brass); }
-.part.worn { border-color: var(--coral); background: white; box-shadow: 0 4px 14px rgba(217,79,42,.12); }
-
-.part-name {
-  font-size: .82em; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
-  color: var(--ink); margin-bottom: 4px;
-}
-.part.locked .part-name { color: var(--ink-light); }
-.part-slot {
-  font-size: .64em; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--ink-light); margin-bottom: 8px;
-}
-.part-visual {
-  width: 100%; aspect-ratio: 2 / 1; background: var(--cream); border-radius: 6px;
-  display: flex; align-items: center; justify-content: center; margin-bottom: 8px;
-  overflow: hidden;
-}
-.part-visual svg { width: 80%; height: 80%; }
-.part.locked .part-visual { opacity: .35; }
-.part-words {
-  font-size: .76em; line-height: 1.5; color: var(--ink-mid);
-}
-.part-words .label {
-  display: block; font-size: .92em; color: var(--ink-light); font-style: italic;
-  margin-bottom: 2px;
-}
-.part-words code {
-  display: inline-block;
-  background: var(--cream); padding: 1px 6px; border-radius: 3px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: .92em; color: var(--ink-mid); margin: 2px 2px 0 0;
-}
-.part.unlocked .part-words code { background: #FAEFE0; color: var(--brass); }
-.part.worn .part-words code { background: rgba(217,79,42,.10); color: var(--coral); }
-
-.part-status {
-  position: absolute; top: 10px; right: 10px;
-  font-size: .62em; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--ink-light);
-}
-.part.unlocked .part-status { color: var(--brass); }
-.part.worn .part-status { color: var(--coral); }
-
-/* writing area for revision */
-.writing-area {
-  max-width: 720px; margin: 8px auto 24px; padding: 0 24px;
-}
-.writing-area .panel { padding: 20px 24px; }
-.writing-area textarea {
-  width: 100%; min-height: 180px;
-  border: 1.5px solid var(--grid); border-radius: 8px;
-  padding: 14px 16px; font-size: 1em; font-family: inherit; line-height: 1.65;
-  color: var(--ink); background: var(--cream); resize: vertical;
-  outline: none; transition: border-color .18s;
-}
-.writing-area textarea:focus { border-color: var(--brass); background: white; }
-.writing-area .hint { font-size: .9em; color: var(--ink-light); font-style: italic; margin-top: 8px; }
-.writing-area .prior-draft {
-  background: var(--cream); border-left: 3px solid var(--grid);
-  padding: 14px 18px; margin-bottom: 16px; border-radius: 4px;
-  font-size: .98em; line-height: 1.65; color: var(--ink-mid);
+.draft-text {
+  font-size: 1em; line-height: 1.65; color: var(--ink);
   white-space: pre-wrap; word-wrap: break-word;
 }
-.writing-area .prior-draft .label {
-  display: block; font-size: .68em; font-weight: 700; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--ink-light); margin-bottom: 8px;
+.draft-text.empty { color: var(--ink-light); font-style: italic; }
+
+/* ── Cabinet ──────────────────────────────────────────── */
+.cabinet {
+  max-width: 760px; margin: 16px auto 36px; padding: 0 24px;
+}
+.cabinet-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 14px; flex-wrap: wrap; gap: 8px;
+}
+.cabinet-title {
+  font-size: 1.15em; font-weight: 800; letter-spacing: -.01em; color: var(--ink);
+}
+.cabinet-counter {
+  font-size: .88em; color: var(--ink-light); font-style: italic;
 }
 
-/* share row */
-.share-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 24px 0 8px; }
-.share-btn {
-  background: white; border: 1.5px solid var(--grid); border-radius: 100px;
-  padding: 11px 24px; font-size: .94em; font-weight: 600; font-family: inherit;
-  color: var(--ink); cursor: pointer;
-  transition: border-color .18s, color .18s, box-shadow .18s, transform .18s;
-  box-shadow: 0 1px 4px rgba(37,26,16,.06);
+.tier {
+  margin-bottom: 28px;
 }
-.share-btn:hover { border-color: var(--brass); color: var(--brass); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(184,125,42,.16); }
-.share-msg { font-size: .88em; color: var(--teal); font-style: italic; opacity: 0; transition: opacity .3s ease; }
-.share-msg.shown { opacity: 1; }
+.tier-header {
+  display: flex; align-items: center; gap: 12px; margin: 8px 0 12px;
+}
+.tier-label {
+  font-size: .68em; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.tier-rule { flex: 1; height: 1px; background: var(--grid); }
+.tier-note {
+  font-size: .82em; color: var(--ink-light); font-style: italic;
+  margin: -4px 0 10px;
+}
 
-/* placeholder warning */
-.placeholder-note {
-  max-width: 620px; margin: 0 auto 8px; padding: 12px 24px;
+.tier-common  .tier-label { color: var(--common); }
+.tier-uncommon .tier-label { color: var(--uncommon); }
+.tier-rare    .tier-label { color: var(--rare); }
+.tier-discipline .tier-label { color: var(--discipline); }
+
+.part-list {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.part {
+  border: 1.5px solid var(--grid); border-radius: 10px;
+  background: var(--paper); padding: 14px 16px 12px;
+  transition: border-color .18s, box-shadow .18s, background .18s;
+}
+.part.unlocked {
+  background: white;
+  border-color: var(--brass);
+  box-shadow: 0 4px 14px rgba(184,125,42,.12);
+}
+.tier-uncommon .part.unlocked { border-color: var(--uncommon); box-shadow: 0 4px 14px rgba(27,122,104,.12); }
+.tier-rare    .part.unlocked { border-color: var(--rare);    box-shadow: 0 4px 14px rgba(122,69,112,.12); }
+.tier-discipline .part.unlocked { border-color: var(--discipline); box-shadow: 0 4px 14px rgba(60,90,120,.12); }
+
+.part-name {
+  font-size: 1em; font-weight: 700; letter-spacing: -.005em; color: var(--ink);
+  margin-bottom: 4px;
+}
+.part.locked .part-name { color: var(--ink-light); }
+.part-description {
+  font-size: .88em; color: var(--ink-mid); line-height: 1.55; margin-bottom: 10px;
+}
+.part-words-label {
+  font-size: .74em; color: var(--ink-light); font-style: italic;
+  margin-bottom: 4px;
+}
+.part-words {
+  display: flex; flex-wrap: wrap; gap: 4px 6px;
+}
+.part-word {
+  display: inline-block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .82em;
+  background: var(--cream);
+  color: var(--ink-mid);
+  padding: 1px 7px;
+  border-radius: 3px;
+}
+.part-word.hit {
+  background: #FAEFE0; color: var(--brass); font-weight: 700;
+}
+.tier-uncommon .part-word.hit { background: rgba(27,122,104,.14); color: var(--uncommon); }
+.tier-rare    .part-word.hit { background: rgba(122,69,112,.14); color: var(--rare); }
+.tier-discipline .part-word.hit { background: rgba(60,90,120,.14); color: var(--discipline); }
+
+/* ── Footer ──────────────────────────────────────────── */
+.footer {
+  padding: 24px 24px 64px; text-align: center;
+}
+.footer p {
   font-size: .84em; color: var(--ink-light); font-style: italic;
-  text-align: center; line-height: 1.5;
 }
-
-/* footer */
-.footer { padding: 32px 24px 64px; text-align: center; }
-.footer p { font-size: .84em; color: var(--ink-light); font-style: italic; }
 </style>
 </head>
 <body>
 
-<section class="hero">
-  <div class="eyebrow">Technical Emotion Design</div>
-  <h1>Chapter <em>One</em></h1>
-  <p class="subtitle">A paper doll. A cabinet of pieces. Your writing is what unlocks them.</p>
-</section>
+<nav class="topbar">
+  <a href="./README.md">← Technical Emotion Design</a>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">Chapter One</div>
+  <h1>What you reached for</h1>
+  <p class="subtitle">The cabinet below shows the moves your writing made. Some are lit because your words were there. The rest show what would light them.</p>
+</header>
 
 <section class="prose">
-  <p>You wrote something on the introduction page. The words you used are listed below as a paper doll and a cabinet of pieces. Most of the pieces are locked. Each locked piece shows the words that would unlock it.</p>
-  <p>If you write the words, the pieces unlock. Once unlocked, you choose what to wear.</p>
-  <p class="small">The page is not reading you. The page is matching words. You can see every word it looks for, on every piece, before you write a thing.</p>
+  <p>You wrote something on the introduction page. This page does not read it. It matches it. Every word it looks for is shown on the cabinet, on every piece, before you write a thing.</p>
+  <p>If you want more lit, go back to the introduction and add to what you wrote.</p>
 </section>
 
-<div class="placeholder-note">
-  Art on the paper doll is placeholder. The pieces will be drawn by a human; the matching and unlocking is the part that matters here.
-</div>
-
-<div class="room">
-
-  <!-- DOLL -->
-  <div class="panel doll-wrap">
-    <div class="panel-label">The doll</div>
-    <svg id="doll" viewBox="0 0 240 320" preserveAspectRatio="xMidYMid meet">
-      <!-- base body — neutral, paper-doll style -->
-      <g id="doll-base" stroke="#A08070" stroke-width="2" fill="#FDFAF6">
-        <!-- head -->
-        <ellipse cx="120" cy="58" rx="32" ry="38" />
-        <!-- neck -->
-        <rect x="110" y="92" width="20" height="14" />
-        <!-- body -->
-        <path d="M 75 110 Q 70 130 78 160 L 78 215 Q 76 230 86 240 L 154 240 Q 164 230 162 215 L 162 160 Q 170 130 165 110 Q 145 100 120 100 Q 95 100 75 110 Z" />
-        <!-- left arm -->
-        <path d="M 78 115 Q 60 145 56 195 Q 56 210 64 215" stroke-linecap="round" fill="none" />
-        <!-- right arm -->
-        <path d="M 162 115 Q 180 145 184 195 Q 184 210 176 215" stroke-linecap="round" fill="none" />
-        <!-- left leg -->
-        <path d="M 100 240 L 96 305" stroke-linecap="round" fill="none" />
-        <!-- right leg -->
-        <path d="M 140 240 L 144 305" stroke-linecap="round" fill="none" />
-      </g>
-      <!-- worn parts get appended here -->
-      <g id="doll-worn"></g>
-    </svg>
+<section class="draft-area">
+  <div class="draft-panel">
+    <div class="draft-label">Your instructions, from the introduction</div>
+    <div class="draft-text" id="draftText">You did not write anything on the introduction page yet. The cabinet has nothing to match against.</div>
   </div>
-
-  <!-- CABINET -->
-  <div class="panel">
-    <div class="panel-label">The cabinet</div>
-    <div class="cabinet-controls">
-      <div class="left">
-        <span class="cabinet-counter" id="cabinetCounter">0 unlocked</span>
-      </div>
-      <div class="right">
-        <button class="cabinet-toggle" id="hideLockedBtn" title="Show only pieces you have already unlocked">Hide locked</button>
-      </div>
-    </div>
-    <div class="cabinet-grid collapsed" id="cabinet"></div>
-    <div class="cabinet-expand-row">
-      <button class="cabinet-expand-btn" id="expandBtn">Show all</button>
-    </div>
-  </div>
-
-</div>
-
-
-<section class="prose">
-  <p>Your instructions are what unlocks pieces. If you want to unlock more, go back to the introduction and add to what you wrote.</p>
 </section>
 
-<div class="writing-area">
-  <div class="panel">
-    <div class="prior-draft" id="priorDraft">
-      <span class="label">Your instructions, from the introduction</span>
-      <span id="priorDraftText">You did not write anything on the introduction page yet. The cabinet has nothing to match against.</span>
-    </div>
+<section class="cabinet">
+  <div class="cabinet-header">
+    <div class="cabinet-title">The cabinet</div>
+    <div class="cabinet-counter" id="cabinetCounter">0 lit</div>
   </div>
-</div>
-
-<section class="prose">
-  <div class="share-row">
-    <button class="share-btn" id="shareBtn">Copy your doll and instructions</button>
-    <span class="share-msg" id="shareMsg"></span>
-  </div>
-  <p class="small">Copying puts the text on your clipboard. You can paste it anywhere &mdash; an email, a chat, a note. It includes a link back to the handbook so whoever you send it to can come look.</p>
-</section>
-
-<section class="prose">
-  <p class="small">The pieces will keep accumulating across the handbook. A piece you unlock here will still be available later.</p>
+  <div id="cabinetTiers"></div>
 </section>
 
 <div class="footer">
-  <p>Technical Emotion Design &mdash; Chapter One. Working draft.</p>
+  <p>Working draft. Marked Claude-draft prose; Hallie to revise.</p>
 </div>
 
-
 <script src="./config.js"></script>
+<script src="./parts-vocabulary.js"></script>
 <script>
-/* ────────── State ────────── */
-const STORAGE_INTRO_FIRST = 'beer.introduction.firstDraftLocked';
+const STORAGE_INTRO_FIRST   = 'beer.introduction.firstDraftLocked';
 const STORAGE_INTRO_REVISED = 'beer.introduction.revised';
-const STORAGE_WORN = 'beer.chapter1.worn';
-const STORAGE_UNLOCKED_EVER = 'beer.chapter1.unlockedEver';
 
-/* ────────── Part catalog ──────────
-   Each part has:
-   - id (storage key)
-   - name (display)
-   - slot (head | eyes | hands | accessory)
-   - words (unlock vocabulary; matching is case-insensitive substring on whole-word basis)
-   - render(g) — draws onto the doll's worn group, given an SVG namespace
-   - visual(svg) — draws the small thumbnail for the cabinet
-*/
-const NS = 'http://www.w3.org/2000/svg';
+const TIER_ORDER = ['common', 'uncommon', 'rare', 'discipline'];
+const TIER_NOTES = {
+  common:     'Bread-and-butter moves. Most good instructions reach here first.',
+  uncommon:   'Moves that soften for the follower. Room, recovery, acknowledgement.',
+  rare:       'The hardest move: leaving the follower margin to be wrong.',
+  discipline: 'Vocabularies of craft. Any one a writer reaches for is a tell about which room they trained in.',
+};
 
-const PARTS = [
-  {
-    id: 'wide-hat', name: 'Wide-brim hat', slot: 'head',
-    words: ['hat', 'cap', 'cover', 'shade', 'sun'],
-    visual: (svg) => { svg.innerHTML = `
-      <path d="M 10 50 L 90 50 M 20 50 Q 50 18 80 50 Z" fill="#D8CDB8" stroke="#6B5344" stroke-width="2"/>
-    `; },
-    render: (g) => { g.insertAdjacentHTML('beforeend', `
-      <path d="M 70 50 L 170 50 M 82 50 Q 120 12 158 50 Z" fill="#D8CDB8" stroke="#6B5344" stroke-width="2"/>
-    `); },
-  },
-  {
-    id: 'small-cap', name: 'Small cap', slot: 'head',
-    words: ['short', 'small', 'neat', 'tight', 'simple'],
-    visual: (svg) => { svg.innerHTML = `
-      <path d="M 30 40 Q 50 18 70 40 L 70 48 L 30 48 Z" fill="#7A4570" stroke="#6B5344" stroke-width="2"/>
-    `; },
-    render: (g) => { g.insertAdjacentHTML('beforeend', `
-      <path d="M 96 38 Q 120 14 144 38 L 144 48 L 96 48 Z" fill="#7A4570" stroke="#6B5344" stroke-width="2"/>
-    `); },
-  },
-  {
-    id: 'round-glasses', name: 'Round glasses', slot: 'eyes',
-    words: ['see', 'look', 'notice', 'observe', 'view', 'eye'],
-    visual: (svg) => { svg.innerHTML = `
-      <circle cx="30" cy="40" r="10" fill="none" stroke="#3C5A78" stroke-width="2"/>
-      <circle cx="70" cy="40" r="10" fill="none" stroke="#3C5A78" stroke-width="2"/>
-      <line x1="40" y1="40" x2="60" y2="40" stroke="#3C5A78" stroke-width="2"/>
-    `; },
-    render: (g) => { g.insertAdjacentHTML('beforeend', `
-      <circle cx="108" cy="58" r="7" fill="none" stroke="#3C5A78" stroke-width="2"/>
-      <circle cx="132" cy="58" r="7" fill="none" stroke="#3C5A78" stroke-width="2"/>
-      <line x1="115" y1="58" x2="125" y2="58" stroke="#3C5A78" stroke-width="2"/>
-    `); },
-  },
-  {
-    id: 'square-glasses', name: 'Square glasses', slot: 'eyes',
-    words: ['exact', 'precise', 'careful', 'check', 'measure'],
-    visual: (svg) => { svg.innerHTML = `
-      <rect x="20" y="32" width="20" height="16" fill="none" stroke="#1B7A68" stroke-width="2"/>
-      <rect x="60" y="32" width="20" height="16" fill="none" stroke="#1B7A68" stroke-width="2"/>
-      <line x1="40" y1="40" x2="60" y2="40" stroke="#1B7A68" stroke-width="2"/>
-    `; },
-    render: (g) => { g.insertAdjacentHTML('beforeend', `
-      <rect x="101" y="52" width="14" height="11" fill="none" stroke="#1B7A68" stroke-width="2"/>
-      <rect x="125" y="52" width="14" height="11" fill="none" stroke="#1B7A68" stroke-width="2"/>
-      <line x1="115" y1="58" x2="125" y2="58" stroke="#1B7A68" stroke-width="2"/>
-    `); },
-  },
-  {
-    id: 'notebook', name: 'Notebook', slot: 'hands',
-    words: ['write', 'note', 'paper', 'journal', 'log', 'record'],
-    visual: (svg) => { svg.innerHTML = `
-      <rect x="28" y="22" width="44" height="56" fill="#FDFAF6" stroke="#6B5344" stroke-width="2"/>
-      <line x1="34" y1="36" x2="66" y2="36" stroke="#A08070" stroke-width="1"/>
-      <line x1="34" y1="48" x2="66" y2="48" stroke="#A08070" stroke-width="1"/>
-      <line x1="34" y1="60" x2="60" y2="60" stroke="#A08070" stroke-width="1"/>
-    `; },
-    render: (g) => { g.insertAdjacentHTML('beforeend', `
-      <rect x="50" y="200" width="20" height="26" fill="#FDFAF6" stroke="#6B5344" stroke-width="2"/>
-      <line x1="53" y1="208" x2="67" y2="208" stroke="#A08070" stroke-width="1"/>
-      <line x1="53" y1="214" x2="67" y2="214" stroke="#A08070" stroke-width="1"/>
-      <line x1="53" y1="220" x2="64" y2="220" stroke="#A08070" stroke-width="1"/>
-    `); },
-  },
-  {
-    id: 'lantern', name: 'Lantern', slot: 'hands',
-    words: ['light', 'lamp', 'glow', 'bright', 'shine', 'lantern'],
-    visual: (svg) => { svg.innerHTML = `
-      <rect x="34" y="28" width="32" height="36" fill="#FAEFE0" stroke="#B87D2A" stroke-width="2"/>
-      <line x1="50" y1="28" x2="50" y2="18" stroke="#6B5344" stroke-width="2"/>
-      <line x1="42" y1="38" x2="58" y2="38" stroke="#B87D2A" stroke-width="1"/>
-      <line x1="42" y1="50" x2="58" y2="50" stroke="#B87D2A" stroke-width="1"/>
-    `; },
-    render: (g) => { g.insertAdjacentHTML('beforeend', `
-      <rect x="174" y="200" width="18" height="22" fill="#FAEFE0" stroke="#B87D2A" stroke-width="2"/>
-      <line x1="183" y1="200" x2="183" y2="190" stroke="#6B5344" stroke-width="2"/>
-      <line x1="178" y1="208" x2="188" y2="208" stroke="#B87D2A" stroke-width="1"/>
-    `); },
-  },
-  {
-    id: 'rope', name: 'Coiled rope', slot: 'hands',
-    words: ['rope', 'tie', 'bind', 'hold', 'pull', 'line'],
-    visual: (svg) => { svg.innerHTML = `
-      <circle cx="50" cy="42" r="14" fill="none" stroke="#7A4570" stroke-width="3"/>
-      <circle cx="50" cy="42" r="8" fill="none" stroke="#7A4570" stroke-width="2"/>
-    `; },
-    render: (g) => { g.insertAdjacentHTML('beforeend', `
-      <circle cx="58" cy="210" r="9" fill="none" stroke="#7A4570" stroke-width="2.5"/>
-      <circle cx="58" cy="210" r="5" fill="none" stroke="#7A4570" stroke-width="1.5"/>
-    `); },
-  },
-  {
-    id: 'compass', name: 'Compass', slot: 'hands',
-    words: ['direction', 'north', 'find', 'point', 'compass', 'orient'],
-    visual: (svg) => { svg.innerHTML = `
-      <circle cx="50" cy="42" r="16" fill="#FDFAF6" stroke="#3C5A78" stroke-width="2"/>
-      <polygon points="50,30 47,42 50,54 53,42" fill="#D94F2A"/>
-    `; },
-    render: (g) => { g.insertAdjacentHTML('beforeend', `
-      <circle cx="182" cy="210" r="10" fill="#FDFAF6" stroke="#3C5A78" stroke-width="2"/>
-      <polygon points="182,202 180,210 182,218 184,210" fill="#D94F2A"/>
-    `); },
-  },
-  {
-    id: 'scarf', name: 'Soft scarf', slot: 'accessory',
-    words: ['warm', 'soft', 'wrap', 'comfort', 'gentle'],
-    visual: (svg) => { svg.innerHTML = `
-      <path d="M 22 36 Q 50 28 78 36 L 78 44 Q 60 50 50 60 Q 40 50 22 44 Z" fill="#4A6B2C" stroke="#6B5344" stroke-width="2"/>
-    `; },
-    render: (g) => { g.insertAdjacentHTML('beforeend', `
-      <path d="M 88 104 Q 120 100 152 104 L 152 116 Q 130 122 120 130 Q 110 122 88 116 Z" fill="#4A6B2C" stroke="#6B5344" stroke-width="2"/>
-    `); },
-  },
-  {
-    id: 'thermos', name: 'Thermos', slot: 'accessory',
-    words: ['warm', 'drink', 'tea', 'coffee', 'water', 'carry'],
-    visual: (svg) => { svg.innerHTML = `
-      <rect x="36" y="20" width="28" height="56" rx="4" fill="#1B7A68" stroke="#6B5344" stroke-width="2"/>
-      <line x1="36" y1="34" x2="64" y2="34" stroke="#6B5344" stroke-width="1.5"/>
-    `; },
-    render: (g) => { g.insertAdjacentHTML('beforeend', `
-      <rect x="92" y="160" width="10" height="22" rx="2" fill="#1B7A68" stroke="#6B5344" stroke-width="1.5"/>
-      <line x1="92" y1="165" x2="102" y2="165" stroke="#6B5344" stroke-width="1"/>
-    `); },
-  },
-  {
-    id: 'clipboard', name: 'Clipboard', slot: 'hands',
-    words: ['list', 'check', 'step', 'order', 'plan', 'task'],
-    visual: (svg) => { svg.innerHTML = `
-      <rect x="28" y="20" width="44" height="60" fill="#FDFAF6" stroke="#6B5344" stroke-width="2"/>
-      <rect x="40" y="14" width="20" height="10" fill="#B87D2A" stroke="#6B5344" stroke-width="1.5"/>
-      <line x1="34" y1="38" x2="66" y2="38" stroke="#A08070" stroke-width="1"/>
-      <line x1="34" y1="48" x2="58" y2="48" stroke="#A08070" stroke-width="1"/>
-      <line x1="34" y1="58" x2="62" y2="58" stroke="#A08070" stroke-width="1"/>
-    `; },
-    render: (g) => { g.insertAdjacentHTML('beforeend', `
-      <rect x="50" y="198" width="20" height="28" fill="#FDFAF6" stroke="#6B5344" stroke-width="2"/>
-      <rect x="56" y="194" width="8" height="6" fill="#B87D2A" stroke="#6B5344" stroke-width="1"/>
-      <line x1="53" y1="208" x2="67" y2="208" stroke="#A08070" stroke-width="1"/>
-      <line x1="53" y1="214" x2="65" y2="214" stroke="#A08070" stroke-width="1"/>
-    `); },
-  },
-  {
-    id: 'blanket', name: 'Folded blanket', slot: 'accessory',
-    words: ['heavy', 'fold', 'weight', 'cover', 'thick', 'blanket'],
-    visual: (svg) => { svg.innerHTML = `
-      <rect x="22" y="32" width="56" height="22" fill="#A03830" stroke="#6B5344" stroke-width="2"/>
-      <line x1="22" y1="40" x2="78" y2="40" stroke="#6B5344" stroke-width="1"/>
-      <line x1="22" y1="46" x2="78" y2="46" stroke="#6B5344" stroke-width="1"/>
-    `; },
-    render: (g) => { g.insertAdjacentHTML('beforeend', `
-      <rect x="50" y="156" width="24" height="10" fill="#A03830" stroke="#6B5344" stroke-width="1.5"/>
-      <line x1="50" y1="160" x2="74" y2="160" stroke="#6B5344" stroke-width="0.8"/>
-    `); },
-  },
-];
-
-/* ────────── Load existing writing from intro + chapter 1 ────────── */
 function gatherText() {
-  // Only the reader's instructions count. Both the committed first draft
-  // and any revision they wrote on the introduction page. No surface on
-  // this page lets them type words at the cabinet directly — that would
-  // break the relationship between the writing and the unlocking.
   const parts = [];
-  const intro1 = localStorage.getItem(STORAGE_INTRO_FIRST);
-  const intro2 = localStorage.getItem(STORAGE_INTRO_REVISED);
-  if (intro1) parts.push(intro1);
-  if (intro2) parts.push(intro2);
+  const a = localStorage.getItem(STORAGE_INTRO_FIRST);
+  const b = localStorage.getItem(STORAGE_INTRO_REVISED);
+  if (a) parts.push(a);
+  if (b) parts.push(b);
   return parts.join('\n').toLowerCase();
 }
 
-function wordsInText(text) {
-  // Lenient word-spotting: tokenize on non-letters, match by stem-prefix.
-  const tokens = text.split(/[^a-z]+/).filter(Boolean);
-  const set = new Set();
-  for (const t of tokens) set.add(t);
-  return set;
+function tokenize(text) {
+  return new Set(text.split(/[^a-z]+/).filter(Boolean));
 }
 
-function matchesWord(textTokens, keyword) {
-  // Match if any token contains the keyword as a prefix or equals it.
-  for (const t of textTokens) {
-    if (t === keyword) return true;
+function wordHit(text, tokens, keyword) {
+  // Multi-word phrases and literal punctuation match as substrings on
+  // the full lowercased text. Single bare words match on tokens with
+  // a stem-prefix rule.
+  if (keyword.length === 1 || keyword.includes(' ') || keyword.includes("'")) {
+    return text.includes(keyword);
+  }
+  if (tokens.has(keyword)) return true;
+  for (const t of tokens) {
     if (t.length > keyword.length && t.startsWith(keyword)) return true;
   }
   return false;
 }
 
-/* ────────── Unlock + wear state ──────────
-   Unlocks are live: a part is unlocked iff its words are currently in the
-   reader's instructions. When the words go away, the part locks again.
-   This keeps the avatar honest as a live mirror of current writing.
-
-   Wear-intent is sticky: if the reader had a part worn and the words later
-   disappear, the part vanishes from the doll but the intention to wear it
-   if available is remembered. Bringing the words back re-wears it.
-   The reader's choice persists; availability follows the writing.
-*/
-function currentlyMatches(part, textTokens) {
+function partIsLit(part, text, tokens) {
   for (const w of part.words) {
-    if (matchesWord(textTokens, w)) return true;
+    if (wordHit(text, tokens, w.toLowerCase())) return true;
   }
   return false;
 }
 
-function loadWorn() {
-  // Worn is a record of *intent* — which parts the reader has chosen to
-  // wear. A part can be in worn without being currently unlocked; it just
-  // does not render on the doll until its words return.
-  try {
-    const raw = localStorage.getItem(STORAGE_WORN);
-    if (!raw) return {};
-    return JSON.parse(raw);
-  } catch (e) { return {}; }
+function partsByTier() {
+  const grouped = {};
+  for (const tier of TIER_ORDER) grouped[tier] = [];
+  for (const [id, part] of Object.entries(window.PARTS_VOCABULARY)) {
+    const tier = part.tier in grouped ? part.tier : 'common';
+    grouped[tier].push({ id, ...part });
+  }
+  return grouped;
 }
-
-function saveWorn(worn) {
-  localStorage.setItem(STORAGE_WORN, JSON.stringify(worn));
-}
-
-/* ────────── Render ────────── */
-const cabinetEl = document.getElementById('cabinet');
-const dollWornEl = document.getElementById('doll-worn');
-const priorDraftTextEl = document.getElementById('priorDraftText');
-const shareBtn = document.getElementById('shareBtn');
-const shareMsg = document.getElementById('shareMsg');
-const cabinetCounter = document.getElementById('cabinetCounter');
-const hideLockedBtn = document.getElementById('hideLockedBtn');
-const expandBtn = document.getElementById('expandBtn');
-
-let cabinetExpanded = false;
-let hideLocked = false;
 
 function render() {
   const text = gatherText();
-  const tokens = wordsInText(text);
-  const worn = loadWorn();
-
-  // Compute live unlock state
-  const unlockedNow = {};
-  for (const part of PARTS) {
-    if (currentlyMatches(part, tokens)) unlockedNow[part.id] = true;
-  }
-
-  // Sort: worn-and-unlocked first, then unlocked-not-worn, then locked.
-  // Worn-but-not-currently-unlocked (intention without availability) sits
-  // with the locked group so the reader sees it can't render right now.
-  const sorted = [...PARTS].sort((a, b) => {
-    const score = (p) => {
-      if (worn[p.id] && unlockedNow[p.id]) return 0;
-      if (unlockedNow[p.id]) return 1;
-      return 2;
-    };
-    return score(a) - score(b);
-  });
-
-  const visible = hideLocked
-    ? sorted.filter(p => !!unlockedNow[p.id])
-    : sorted;
-
-  // Build cabinet
-  cabinetEl.innerHTML = '';
-  for (const part of visible) {
-    const unlocked = !!unlockedNow[part.id];
-    const isWorn = unlocked && worn[part.id];
-
-    const el = document.createElement('button');
-    el.className = 'part ' + (isWorn ? 'worn' : (unlocked ? 'unlocked' : 'locked'));
-    el.dataset.partId = part.id;
-
-    const status = isWorn ? 'worn' : (unlocked ? 'unlocked' : 'locked');
-    el.innerHTML = `
-      <div class="part-status">${status}</div>
-      <div class="part-slot">${part.slot}</div>
-      <div class="part-name">${part.name}</div>
-      <div class="part-visual"><svg viewBox="0 0 100 80" preserveAspectRatio="xMidYMid meet"></svg></div>
-      <div class="part-words">
-        <span class="label">${unlocked ? 'unlocked by writing:' : 'unlocks when you write:'}</span>
-        ${part.words.map(w => {
-          const hit = matchesWord(tokens, w);
-          return `<code style="${hit ? 'font-weight:700' : ''}">${w}</code>`;
-        }).join(' ')}
-      </div>
-    `;
-    // Render thumbnail
-    const thumb = el.querySelector('.part-visual svg');
-    part.visual(thumb);
-
-    if (unlocked) {
-      el.addEventListener('click', () => {
-        const w = loadWorn();
-        // toggle exclusive within slot
-        if (w[part.id]) {
-          delete w[part.id];
-        } else {
-          // remove any other worn part in the same slot
-          for (const other of PARTS) {
-            if (other.slot === part.slot && w[other.id]) delete w[other.id];
-          }
-          w[part.id] = true;
-        }
-        saveWorn(w);
-        render();
-      });
-    }
-    cabinetEl.appendChild(el);
-  }
-
-  // Counter
-  const unlockedCount = PARTS.filter(p => unlockedNow[p.id]).length;
-  cabinetCounter.textContent = `${unlockedCount} of ${PARTS.length} unlocked`;
-
-  // Expand/collapse state
-  if (cabinetExpanded) {
-    cabinetEl.classList.remove('collapsed');
-    expandBtn.textContent = 'Show less';
-  } else {
-    cabinetEl.classList.add('collapsed');
-    expandBtn.textContent = 'Show all';
-  }
-  // Hide expand button if there's nothing to expand to
-  const everythingFits = visible.length <= 3; // top row fits ~3 wide at default size
-  expandBtn.parentElement.style.display = everythingFits ? 'none' : 'flex';
-
-  // Hide-locked button state
-  hideLockedBtn.classList.toggle('on', hideLocked);
-  hideLockedBtn.textContent = hideLocked ? 'Show locked' : 'Hide locked';
-
-  // Render doll worn parts — only those whose words are currently present.
-  // A worn-but-not-currently-unlocked part is intention without rendering;
-  // it will return when the words return.
-  dollWornEl.innerHTML = '';
-  for (const part of PARTS) {
-    if (worn[part.id] && unlockedNow[part.id]) {
-      part.render(dollWornEl);
-    }
-  }
+  const tokens = tokenize(text);
+  const grouped = partsByTier();
 
   // Prior draft display
-  const intro1 = localStorage.getItem(STORAGE_INTRO_FIRST);
-  const intro2 = localStorage.getItem(STORAGE_INTRO_REVISED);
-  let priorText = '';
-  if (intro2 && intro2.trim()) priorText = intro2;
-  else if (intro1 && intro1.trim()) priorText = intro1;
-  if (priorText) {
-    priorDraftTextEl.textContent = priorText;
+  const a = localStorage.getItem(STORAGE_INTRO_FIRST);
+  const b = localStorage.getItem(STORAGE_INTRO_REVISED);
+  const draftText = (b && b.trim()) ? b : (a && a.trim() ? a : '');
+  const draftEl = document.getElementById('draftText');
+  if (draftText) {
+    draftEl.textContent = draftText;
+    draftEl.classList.remove('empty');
   } else {
-    priorDraftTextEl.textContent = 'You did not write anything on the introduction page yet. Anything you write below will still work.';
+    draftEl.textContent = 'You did not write anything on the introduction page yet. The cabinet has nothing to match against.';
+    draftEl.classList.add('empty');
   }
+
+  // Cabinet
+  const tiersEl = document.getElementById('cabinetTiers');
+  tiersEl.innerHTML = '';
+
+  let totalLit = 0;
+  let totalParts = 0;
+
+  for (const tier of TIER_ORDER) {
+    const partsInTier = grouped[tier] || [];
+    if (!partsInTier.length) continue;
+
+    const section = document.createElement('section');
+    section.className = `tier tier-${tier}`;
+
+    const header = document.createElement('div');
+    header.className = 'tier-header';
+    header.innerHTML = `
+      <span class="tier-label">${tier}</span>
+      <span class="tier-rule"></span>
+    `;
+    section.appendChild(header);
+
+    if (TIER_NOTES[tier]) {
+      const note = document.createElement('div');
+      note.className = 'tier-note';
+      note.textContent = TIER_NOTES[tier];
+      section.appendChild(note);
+    }
+
+    const list = document.createElement('div');
+    list.className = 'part-list';
+
+    for (const part of partsInTier) {
+      const lit = partIsLit(part, text, tokens);
+      totalParts += 1;
+      if (lit) totalLit += 1;
+
+      const partEl = document.createElement('div');
+      partEl.className = 'part ' + (lit ? 'unlocked' : 'locked');
+
+      const wordsHtml = part.words.map(w => {
+        const hit = wordHit(text, tokens, w.toLowerCase());
+        const display = w === '?' ? '?' : w;
+        return `<span class="part-word${hit ? ' hit' : ''}">${escapeHtml(display)}</span>`;
+      }).join('');
+
+      partEl.innerHTML = `
+        <div class="part-name">${escapeHtml(part.name)}</div>
+        <div class="part-description">${escapeHtml(part.description || '')}</div>
+        <div class="part-words-label">${lit ? 'lit by:' : 'lights when you write:'}</div>
+        <div class="part-words">${wordsHtml}</div>
+      `;
+      list.appendChild(partEl);
+    }
+
+    section.appendChild(list);
+    tiersEl.appendChild(section);
+  }
+
+  document.getElementById('cabinetCounter').textContent =
+    `${totalLit} of ${totalParts} lit`;
 }
 
-/* ────────── Share ────────── */
-function buildShareText() {
-  const cfg = window.HANDBOOK_CONFIG || { shortName: 'Technical Emotion Design', homeUrl: '' };
-  const intro1 = localStorage.getItem(STORAGE_INTRO_FIRST) || '';
-  const intro2 = localStorage.getItem(STORAGE_INTRO_REVISED) || '';
-  const instructions = (intro2.trim() ? intro2 : intro1).trim();
-  const worn = loadWorn();
-  const wornNames = PARTS.filter(p => worn[p.id]).map(p => p.name);
-
-  const lines = [];
-  lines.push(`From ${cfg.shortName} — my paper doll and instructions.`);
-  if (cfg.homeUrl) lines.push(cfg.homeUrl);
-  lines.push('');
-  lines.push(wornNames.length
-    ? `Doll: ${wornNames.join(', ')}.`
-    : 'Doll: (nothing on yet).');
-  lines.push('');
-  lines.push('Instructions:');
-  lines.push(instructions || '(I have not written anything yet.)');
-  return lines.join('\n');
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
 }
-
-shareBtn.addEventListener('click', async () => {
-  const text = buildShareText();
-  try {
-    await navigator.clipboard.writeText(text);
-    shareMsg.textContent = 'copied to your clipboard';
-    shareMsg.classList.add('shown');
-    setTimeout(() => shareMsg.classList.remove('shown'), 2400);
-  } catch (err) {
-    // Fallback for browsers without clipboard API access
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    try { document.execCommand('copy'); } catch (e) {}
-    document.body.removeChild(ta);
-    shareMsg.textContent = 'copied';
-    shareMsg.classList.add('shown');
-    setTimeout(() => shareMsg.classList.remove('shown'), 2400);
-  }
-});
-
-/* ────────── Wire up ────────── */
-expandBtn.addEventListener('click', () => {
-  cabinetExpanded = !cabinetExpanded;
-  render();
-});
-hideLockedBtn.addEventListener('click', () => {
-  hideLocked = !hideLocked;
-  // If everything's now hidden, force-expand so the user can see what they have
-  cabinetExpanded = cabinetExpanded || hideLocked;
-  render();
-});
 
 render();
 </script>
 
 </body>
 </html>
+</content>
+</invoke>
