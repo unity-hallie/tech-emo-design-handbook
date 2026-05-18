@@ -68,6 +68,29 @@ body {
 .prose p:last-child { margin-bottom: 0; }
 .prose .small { font-size: .94em; color: var(--ink-mid); font-style: italic; }
 
+/* ── Empty state ──────────────────────────────────────── */
+.empty-state {
+  max-width: 560px; margin: 12px auto 48px; padding: 0 24px;
+}
+.empty-panel {
+  background: white; border-radius: 14px; padding: 32px 32px 28px;
+  box-shadow: 0 1px 3px rgba(37,26,16,.05), 0 4px 14px rgba(37,26,16,.07);
+  text-align: center;
+}
+.empty-panel p { margin-bottom: 18px; line-height: 1.7; }
+.empty-panel p:last-child { margin-bottom: 0; }
+.empty-lead { font-size: 1.08em; color: var(--ink); }
+.empty-cta {
+  display: inline-block;
+  font-size: 1.05em; font-weight: 700;
+  color: var(--coral); text-decoration: none;
+  border-bottom: 2px solid var(--coral);
+  padding-bottom: 3px;
+  transition: color .18s, border-color .18s;
+}
+.empty-cta:hover { color: var(--ink); border-color: var(--ink); }
+.empty-small { font-size: .9em; color: var(--ink-light); font-style: italic; }
+
 /* ── Prior draft display ──────────────────────────────── */
 .draft-area {
   max-width: 720px; margin: 4px auto 24px; padding: 0 24px;
@@ -184,34 +207,48 @@ body {
 <body>
 
 <nav class="topbar">
-  <a href="./README.md">← Technical Emotion Design</a>
+  <a href="./">← Technical Emotion Design</a>
 </nav>
 
 <header class="hero">
   <div class="eyebrow">Chapter One</div>
   <h1>What you reached for</h1>
-  <p class="subtitle">The cabinet below shows the moves your writing made. Some are lit because your words were there. The rest show what would light them.</p>
+  <p class="subtitle" id="heroSubtitle">The cabinet below shows the moves your writing made. Some are lit because your words were there. The rest show what would light them.</p>
 </header>
 
-<section class="prose">
-  <p>You wrote something on the introduction page. This page does not read it. It matches it. Every word it looks for is shown on the cabinet, on every piece, before you write a thing.</p>
-  <p>If you want more lit, go back to the introduction and add to what you wrote.</p>
-</section>
-
-<section class="draft-area">
-  <div class="draft-panel">
-    <div class="draft-label">Your instructions, from the introduction</div>
-    <div class="draft-text" id="draftText">You did not write anything on the introduction page yet. The cabinet has nothing to match against.</div>
+<!-- Empty state — shown when the reader has no draft from the introduction yet -->
+<section class="empty-state" id="emptyState" hidden>
+  <div class="empty-panel">
+    <p class="empty-lead">This page mirrors what you wrote on the introduction page. You have not written there yet.</p>
+    <p>
+      <a class="empty-cta" href="./introduction.html">Start at the introduction →</a>
+    </p>
+    <p class="empty-small">Come back here when you have written something. The cabinet will be waiting.</p>
   </div>
 </section>
 
-<section class="cabinet">
-  <div class="cabinet-header">
-    <div class="cabinet-title">The cabinet</div>
-    <div class="cabinet-counter" id="cabinetCounter">0 lit</div>
-  </div>
-  <div id="cabinetTiers"></div>
-</section>
+<!-- Live state — shown when there is something to mirror -->
+<div id="liveState" hidden>
+  <section class="prose">
+    <p>You wrote something on the introduction page. This page does not read it. It matches it. Every word it looks for is shown on the cabinet, on every piece, before you write a thing.</p>
+    <p>If you want more lit, <a href="./introduction.html">go back to the introduction</a> and add to what you wrote.</p>
+  </section>
+
+  <section class="draft-area">
+    <div class="draft-panel">
+      <div class="draft-label">Your instructions, from the introduction</div>
+      <div class="draft-text" id="draftText"></div>
+    </div>
+  </section>
+
+  <section class="cabinet">
+    <div class="cabinet-header">
+      <div class="cabinet-title">The cabinet</div>
+      <div class="cabinet-counter" id="cabinetCounter">0 lit</div>
+    </div>
+    <div id="cabinetTiers"></div>
+  </section>
+</div>
 
 <div class="footer">
   <p>Working draft. Marked Claude-draft prose; Hallie to revise.</p>
@@ -280,18 +317,27 @@ function render() {
   const tokens = tokenize(text);
   const grouped = partsByTier();
 
-  // Prior draft display
+  // Empty state: no draft from introduction yet.
   const a = localStorage.getItem(STORAGE_INTRO_FIRST);
   const b = localStorage.getItem(STORAGE_INTRO_REVISED);
   const draftText = (b && b.trim()) ? b : (a && a.trim() ? a : '');
-  const draftEl = document.getElementById('draftText');
-  if (draftText) {
-    draftEl.textContent = draftText;
-    draftEl.classList.remove('empty');
-  } else {
-    draftEl.textContent = 'You did not write anything on the introduction page yet. The cabinet has nothing to match against.';
-    draftEl.classList.add('empty');
+
+  const emptyEl = document.getElementById('emptyState');
+  const liveEl = document.getElementById('liveState');
+  const subtitleEl = document.getElementById('heroSubtitle');
+
+  if (!draftText) {
+    emptyEl.hidden = false;
+    liveEl.hidden = true;
+    if (subtitleEl) subtitleEl.hidden = true;
+    return;
   }
+
+  emptyEl.hidden = true;
+  liveEl.hidden = false;
+  if (subtitleEl) subtitleEl.hidden = false;
+
+  document.getElementById('draftText').textContent = draftText;
 
   // Cabinet
   const tiersEl = document.getElementById('cabinetTiers');

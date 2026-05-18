@@ -8,9 +8,9 @@ A handbook on designing for feeling. You read it by doing the experiments and th
 
 ## Chapter 1
 
-- [Introduction](./introduction.html) — five shapes and a set of bad instructions. Fix them. *(being redesigned)*
-- [Paper doll](./chapter-1-paper-doll.html) — a cabinet of the moves you made. *(being redesigned)*
-- [Grade yourself](./chapter-1-grade-yourself.html) — pick two lenses and revise your own writing.
+1. [Introduction](./introduction.html) — five shapes and a set of bad instructions. Fix them. *(being redesigned)*
+2. [Paper doll](./chapter-1-paper-doll.html) — a cabinet of the moves you made.
+3. [Grade yourself](./chapter-1-grade-yourself.html) — pick two lenses and revise your own writing.
 
 ## Workshop
 
