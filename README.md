@@ -150,6 +150,18 @@ This will evolve. Right now, candidate top-level sections:
 6. **Exercises.** A standalone do-it-yourself section, like
    Beer's appendix.
 
+## Front matter
+
+Short pieces that reclaim a word by encountering it directly. Each
+one anchors a sense of the word the handbook depends on but that
+contemporary usage has drifted from. Read these experimentally.
+
+- [`front-matter/experimentally.html`](./front-matter/experimentally.html)
+  — *On the use of Experiment.* Reclaims the older sense in which
+  *experiment* names a personal encounter with the thing, not a
+  procedure performed by an elite who has already done the
+  encountering for you.
+
 ## Files
 
 - [`README.md`](./README.md) — this file. The frame.

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technical Emotion Design — On the use of Experiment</title>
+<style>
+:root {
+  --cream: #FAF7F2;
+  --ink: #251A10;
+  --ink-mid: #6B5344;
+  --ink-light: #A08070;
+  --coral: #D94F2A;
+  --brass: #B87D2A;
+  --paper: #FDFAF6;
+  --grid: #EDE5D8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.72;
+  overflow-x: hidden;
+}
+
+/* ── Top bar (back to handbook) ─────────────────────────── */
+.topbar {
+  max-width: 720px; margin: 0 auto; padding: 22px 24px 0;
+  font-size: .82em;
+}
+.topbar a {
+  color: var(--ink-mid); text-decoration: none;
+  border-bottom: 1px solid var(--grid);
+  padding-bottom: 2px;
+  transition: color .18s, border-color .18s;
+}
+.topbar a:hover { color: var(--coral); border-color: var(--coral); }
+
+/* ── Hero ─────────────────────────────────────────────── */
+.hero { padding: 56px 24px 24px; text-align: center; max-width: 720px; margin: 0 auto; }
+.eyebrow {
+  font-size: .72em; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--brass); margin-bottom: 22px;
+}
+.hero h1 {
+  font-size: clamp(2.2em,5.5vw,3.6em); font-weight: 900; line-height: 1.06;
+  letter-spacing: -.025em; margin-bottom: 16px;
+}
+.hero h1 em { font-style: normal; color: var(--coral); }
+.hero .subtitle {
+  font-size: 1.02em; color: var(--ink-mid); max-width: 540px;
+  margin: 0 auto; line-height: 1.7; font-style: italic;
+}
+
+/* ── Epigraph ──────────────────────────────────────────── */
+.epigraph {
+  max-width: 620px; margin: 36px auto 8px; padding: 0 24px;
+}
+.epigraph blockquote {
+  border-left: 3px solid var(--brass);
+  padding: 6px 22px 6px 22px;
+  margin: 0;
+  font-size: 1em;
+  line-height: 1.7;
+  color: var(--ink-mid);
+}
+.epigraph blockquote em { color: var(--ink); font-style: italic; }
+.epigraph .attribution {
+  margin-top: 14px;
+  font-size: .88em;
+  color: var(--ink-light);
+  font-style: italic;
+  text-align: right;
+  padding-right: 4px;
+}
+
+/* ── Prose ─────────────────────────────────────────────── */
+.prose { max-width: 620px; margin: 0 auto; padding: 28px 24px 88px; }
+.prose p {
+  font-size: 1.05em; margin-bottom: 18px; line-height: 1.78; color: var(--ink);
+}
+.prose p:last-child { margin-bottom: 0; }
+.prose p.button {
+  margin-top: 36px;
+  font-size: 1.15em;
+  font-weight: 600;
+  text-align: center;
+  color: var(--ink);
+  line-height: 1.55;
+}
+.prose p.button .cap {
+  color: var(--coral);
+  font-weight: 700;
+}
+
+/* ── Footer ───────────────────────────────────────────── */
+.colophon {
+  max-width: 620px; margin: 0 auto; padding: 0 24px 56px;
+  font-size: .82em; color: var(--ink-light);
+  text-align: center;
+  font-style: italic;
+}
+.colophon .rule {
+  width: 64px; height: 1px; background: var(--grid);
+  margin: 0 auto 18px;
+}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../README.md">← Technical Emotion Design</a>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">Front Matter</div>
+  <h1>On the use of <em>Experiment</em></h1>
+  <p class="subtitle">Read this experimentally.</p>
+</header>
+
+<section class="epigraph">
+  <blockquote>
+    <em>Hypotheses non fingo.</em> I frame no hypotheses; for whatever is
+    not deduc'd from the phænomena is to be called an hypothesis; and
+    hypotheses, whether metaphysical or physical, whether of occult
+    qualities or mechanical, have no place in experimental philosophy.
+    In this philosophy particular propositions are inferr'd from the
+    phænomena, and afterwards render'd general by induction.
+  </blockquote>
+  <div class="attribution">
+    — Isaac Newton, <em>General Scholium</em>, added to the second
+    edition of the <em>Principia Mathematica</em> (1713); trans.
+    Andrew Motte (1729).
+  </div>
+</section>
+
+<main class="prose">
+
+  <p>
+    Throughout this handbook, you will encounter several interactive
+    experiments. I am purposefully choosing to use the sense of the
+    word closer to how the Royal Society was using it in the early
+    days of the Scientific Method than to how we use it today: closer
+    to direct experience of a thing, as Newton used it when he said
+    that hypotheses have no place in experimental philosophy. Where
+    the direct experience is first and the theory follows.
+  </p>
+
+  <p>
+    Personal experience means a great deal to me, personally and
+    professionally, as a teacher, developer, and storyteller, and this
+    is one of the reasons why I have chosen to begin the project of a
+    manual on Emotion Design: design fundamentally considering the
+    personal experience of those who encounter it, the constraints and
+    affordances of personal experience, and how beings like ourselves
+    turn personal experience into <span class="cap">Meaning</span>.
+  </p>
+
+</main>
+
+<footer class="colophon">
+  <div class="rule"></div>
+  Written by Hallie Larsson.
+  Page rendered 2026-05-18.
+</footer>
+
+</body>
+</html>
+</content>
+</invoke>
