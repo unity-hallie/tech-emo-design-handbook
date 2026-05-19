@@ -132,6 +132,105 @@ body {
   font-size: .84em; color: var(--ink-light); font-style: italic;
 }
 .footer em { color: var(--ink-mid); }
+
+/* ── Ternary exercise ────────────────────────────────── */
+.exercise {
+  margin: 28px 0 18px;
+  padding: 22px 22px 24px;
+  background: var(--paper);
+  border: 1.5px solid var(--grid);
+  border-radius: 12px;
+}
+.exercise-label {
+  font-size: .68em; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--brass);
+  margin-bottom: 10px;
+}
+.exercise-prompt {
+  font-size: .96em; line-height: 1.65; color: var(--ink);
+  margin-bottom: 18px;
+}
+.exercise-prompt em { color: var(--ink-mid); font-style: italic; }
+.exercise-prompt strong { color: var(--ink); font-weight: 700; }
+
+.ternary-wrap {
+  width: 100%; max-width: 520px; margin: 0 auto 16px;
+}
+.ternary {
+  width: 100%; height: auto; display: block;
+  touch-action: none;
+}
+
+.chip-tray-label {
+  font-size: .82em; color: var(--ink-mid); margin-bottom: 6px;
+}
+.chip-tray {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 10px;
+  background: var(--cream);
+  border: 1px dashed var(--grid);
+  border-radius: 8px;
+  min-height: 56px;
+  margin-bottom: 16px;
+}
+.chip {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 100px;
+  background: white;
+  border: 1.5px solid var(--grid);
+  font-size: .88em; color: var(--ink);
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  transition: border-color .15s, box-shadow .15s, transform .12s;
+}
+.chip:hover { border-color: var(--brass); }
+.chip.dragging { opacity: 0.5; cursor: grabbing; }
+
+/* Placed chips inside SVG */
+.placed-chip {
+  cursor: grab;
+}
+.placed-chip:hover .chip-bg { stroke: var(--brass); }
+.placed-chip.dragging { opacity: 0.75; cursor: grabbing; }
+
+.your-own {
+  display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+  margin-bottom: 14px;
+}
+.your-own label {
+  flex: 1 1 100%;
+  font-size: .9em; color: var(--ink-mid); margin-bottom: 4px;
+}
+.your-own input {
+  flex: 1 1 200px;
+  padding: 8px 12px;
+  border: 1.5px solid var(--grid);
+  border-radius: 6px;
+  font-size: .94em;
+  font-family: inherit;
+  background: white;
+}
+.your-own input:focus { outline: none; border-color: var(--brass); }
+.your-own button {
+  padding: 8px 14px;
+  background: white;
+  border: 1.5px solid var(--brass);
+  border-radius: 6px;
+  font-size: .88em;
+  font-family: inherit;
+  color: var(--brass);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.your-own button:hover { background: var(--brass); color: white; }
+
+.exercise-after-prompt {
+  font-size: .94em; color: var(--ink-mid); line-height: 1.7;
+  margin-top: 6px;
+}
+
 </style>
 </head>
 <body>
@@ -200,6 +299,56 @@ body {
       Not engineering. Engineering is predictable. Techne is living,
       and the living is dangerous, and the danger is the discipline.]
     </div>
+
+
+    <!-- ── Exercise: Art / Craft / Science ternary ── -->
+    <div class="exercise">
+      <div class="exercise-label">A sorting exercise</div>
+      <p class="exercise-prompt">
+        Drag each activity into the triangle, wherever it feels right.
+        Don't think too hard. There is no key.
+      </p>
+
+      <div class="ternary-wrap">
+        <svg class="ternary" viewBox="0 0 520 460" preserveAspectRatio="xMidYMid meet">
+          <!-- Triangle field -->
+          <polygon points="260,30 490,430 30,430"
+                   fill="#FDFAF6" stroke="#6B5344" stroke-width="2"/>
+
+          <!-- Corner labels — bare names only, no glosses -->
+          <text x="260" y="22" text-anchor="middle"
+                font-family="system-ui, sans-serif" font-size="18" font-weight="800"
+                fill="#D94F2A" letter-spacing="0.06em">ART</text>
+
+          <text x="498" y="448" text-anchor="end"
+                font-family="system-ui, sans-serif" font-size="18" font-weight="800"
+                fill="#3C5A78" letter-spacing="0.06em">SCIENCE</text>
+
+          <text x="22" y="448" text-anchor="start"
+                font-family="system-ui, sans-serif" font-size="18" font-weight="800"
+                fill="#1B7A68" letter-spacing="0.06em">CRAFT</text>
+
+          <!-- Placed chips render into this group -->
+          <g id="placed-chips"></g>
+        </svg>
+      </div>
+
+      <div class="chip-tray-label">Drag from here:</div>
+      <div class="chip-tray" id="chipTray"><!-- chips populated by JS --></div>
+
+      <div class="your-own">
+        <label for="yourActivity">An activity you do that you want to plot:</label>
+        <input type="text" id="yourActivity" placeholder="(an activity in your hands)"/>
+        <button id="addYourActivity">Add to tray</button>
+      </div>
+
+      <div class="exercise-after">
+        <p class="exercise-after-prompt">
+          <span class="placeholder">[after-prompt placeholder &mdash; Hallie's voice: only after the reader has placed things. What did the sorting feel like? Which ones did you hesitate on? Notice where the same activity could go in more than one place depending on who is doing it. The corners get named here, by you, from what you just did.]</span>
+        </p>
+      </div>
+    </div>
+
 
     <div class="etymology">
       <div class="word">techne &nbsp;·&nbsp; τέχνη</div>
@@ -307,6 +456,202 @@ body {
 <div class="footer">
   <p>Muslin. Order: <em>design → technical → emotion</em>. Easy doorway, then sharpens, then lands. Paragraphs are placeholders.</p>
 </div>
+
+<script>
+/* ── Ternary drag-and-drop ────────────────────────────── */
+const STORAGE_KEY = 'beer.muslin.why.ternary';
+
+const SEED_ITEMS = [
+  'pottery',
+  'home brewing',
+  'building a CRUD app',
+  'stand-up comedy',
+  'surgery',
+  'bread baking',
+  'pickup basketball',
+  'bookkeeping',
+  'architecture',
+  'cooking dinner Tuesday night',
+  'parenting',
+  'running a meeting',
+];
+
+// Triangle vertices in SVG coords (matches the polygon points)
+const V_ART     = { x: 260, y: 30  };
+const V_SCIENCE = { x: 490, y: 430 };
+const V_CRAFT   = { x: 30,  y: 430 };
+
+// In-triangle test using barycentric coords
+function pointInTriangle(p, a, b, c) {
+  const v0x = c.x - a.x, v0y = c.y - a.y;
+  const v1x = b.x - a.x, v1y = b.y - a.y;
+  const v2x = p.x - a.x, v2y = p.y - a.y;
+  const dot00 = v0x*v0x + v0y*v0y;
+  const dot01 = v0x*v1x + v0y*v1y;
+  const dot02 = v0x*v2x + v0y*v2y;
+  const dot11 = v1x*v1x + v1y*v1y;
+  const dot12 = v1x*v2x + v1y*v2y;
+  const inv = 1 / (dot00 * dot11 - dot01 * dot01);
+  const u = (dot11 * dot02 - dot01 * dot12) * inv;
+  const v = (dot00 * dot12 - dot01 * dot02) * inv;
+  return u >= 0 && v >= 0 && u + v <= 1;
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return { placed: {}, extra: [] };
+    return JSON.parse(raw);
+  } catch (e) { return { placed: {}, extra: [] }; }
+}
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+let state = loadState();
+
+const svg = document.querySelector('.ternary');
+const placedGroup = document.getElementById('placed-chips');
+const chipTray = document.getElementById('chipTray');
+const yourInput = document.getElementById('yourActivity');
+const addBtn = document.getElementById('addYourActivity');
+
+function allItems() {
+  return [...SEED_ITEMS, ...(state.extra || [])];
+}
+
+function svgPointFromEvent(evt) {
+  const pt = svg.createSVGPoint();
+  const touch = evt.touches ? evt.touches[0] : evt;
+  pt.x = touch.clientX; pt.y = touch.clientY;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+
+function render() {
+  // Tray: items not placed
+  chipTray.innerHTML = '';
+  for (const item of allItems()) {
+    if (state.placed[item]) continue;
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.dataset.item = item;
+    chip.textContent = item;
+    chip.addEventListener('pointerdown', startTrayDrag);
+    chipTray.appendChild(chip);
+  }
+  if (chipTray.children.length === 0) {
+    const note = document.createElement('div');
+    note.style.fontSize = '.85em';
+    note.style.color = 'var(--ink-light)';
+    note.style.fontStyle = 'italic';
+    note.textContent = 'tray empty — every item placed';
+    chipTray.appendChild(note);
+  }
+
+  // Placed chips inside SVG
+  placedGroup.innerHTML = '';
+  for (const [item, pos] of Object.entries(state.placed)) {
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('class', 'placed-chip');
+    g.dataset.item = item;
+    g.setAttribute('transform', `translate(${pos.x}, ${pos.y})`);
+
+    // Background pill — size will be set after we measure the text
+    const w = Math.max(60, item.length * 7 + 18);
+    const h = 22;
+    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rect.setAttribute('class', 'chip-bg');
+    rect.setAttribute('x', -w/2);
+    rect.setAttribute('y', -h/2);
+    rect.setAttribute('width', w);
+    rect.setAttribute('height', h);
+    rect.setAttribute('rx', h/2);
+    rect.setAttribute('fill', 'white');
+    rect.setAttribute('stroke', '#6B5344');
+    rect.setAttribute('stroke-width', '1.5');
+    g.appendChild(rect);
+
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    text.setAttribute('x', 0);
+    text.setAttribute('y', 4);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('font-family', 'system-ui, sans-serif');
+    text.setAttribute('font-size', '11');
+    text.setAttribute('fill', '#251A10');
+    text.textContent = item;
+    g.appendChild(text);
+
+    g.addEventListener('pointerdown', startPlacedDrag);
+    placedGroup.appendChild(g);
+  }
+}
+
+let dragging = null; // { item, source: 'tray'|'placed', ghost: <g> or chip }
+
+function startTrayDrag(evt) {
+  evt.preventDefault();
+  const item = evt.currentTarget.dataset.item;
+  dragging = { item, source: 'tray', el: evt.currentTarget };
+  evt.currentTarget.classList.add('dragging');
+  window.addEventListener('pointermove', onDragMove);
+  window.addEventListener('pointerup', onDragEnd);
+}
+
+function startPlacedDrag(evt) {
+  evt.preventDefault();
+  const item = evt.currentTarget.dataset.item;
+  dragging = { item, source: 'placed', el: evt.currentTarget };
+  evt.currentTarget.classList.add('dragging');
+  window.addEventListener('pointermove', onDragMove);
+  window.addEventListener('pointerup', onDragEnd);
+}
+
+function onDragMove(evt) {
+  if (!dragging) return;
+  // Move the placed chip live; tray chips just follow on drop
+  if (dragging.source === 'placed') {
+    const p = svgPointFromEvent(evt);
+    dragging.el.setAttribute('transform', `translate(${p.x}, ${p.y})`);
+  }
+}
+
+function onDragEnd(evt) {
+  window.removeEventListener('pointermove', onDragMove);
+  window.removeEventListener('pointerup', onDragEnd);
+  if (!dragging) return;
+  if (dragging.el && dragging.el.classList) dragging.el.classList.remove('dragging');
+
+  const p = svgPointFromEvent(evt);
+  const insideTriangle = pointInTriangle(p, V_ART, V_SCIENCE, V_CRAFT);
+
+  if (insideTriangle) {
+    state.placed[dragging.item] = { x: p.x, y: p.y };
+  } else {
+    // Dropped outside — return to tray
+    delete state.placed[dragging.item];
+  }
+  saveState(state);
+  dragging = null;
+  render();
+}
+
+addBtn.addEventListener('click', () => {
+  const v = yourInput.value.trim();
+  if (!v) return;
+  if (!state.extra) state.extra = [];
+  if (!state.extra.includes(v) && !SEED_ITEMS.includes(v)) {
+    state.extra.push(v);
+    saveState(state);
+    yourInput.value = '';
+    render();
+  }
+});
+yourInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') { e.preventDefault(); addBtn.click(); }
+});
+
+render();
+</script>
 
 </body>
 </html>
