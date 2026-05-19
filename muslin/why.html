@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muslin — Why?</title>
+<style>
+:root {
+  --cream: #FAF7F2;
+  --ink: #251A10;
+  --ink-mid: #6B5344;
+  --ink-light: #A08070;
+  --coral: #D94F2A;
+  --brass: #B87D2A;
+  --paper: #FDFAF6;
+  --grid: #EDE5D8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.72;
+}
+
+.topbar {
+  max-width: 720px; margin: 0 auto; padding: 22px 24px 0;
+  font-size: .82em;
+}
+.topbar a {
+  color: var(--ink-mid); text-decoration: none;
+  border-bottom: 1px solid var(--grid);
+  padding-bottom: 2px;
+}
+.topbar a:hover { color: var(--coral); border-color: var(--coral); }
+
+.hero { padding: 48px 24px 24px; text-align: center; max-width: 720px; margin: 0 auto; }
+.eyebrow {
+  font-size: .72em; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--brass); margin-bottom: 22px;
+}
+.hero h1 {
+  font-size: clamp(2em,5vw,3.2em); font-weight: 900; line-height: 1.06;
+  letter-spacing: -.025em; margin-bottom: 18px;
+}
+.hero h1 em { font-style: normal; color: var(--coral); }
+.hero .subtitle {
+  font-size: 1.02em; color: var(--ink-mid); max-width: 540px;
+  margin: 0 auto; line-height: 1.7; font-style: italic;
+}
+
+.deck {
+  max-width: 720px; margin: 24px auto;
+  padding: 0 24px;
+}
+.section {
+  background: white; border-radius: 16px;
+  padding: 36px 32px 32px;
+  box-shadow: 0 1px 3px rgba(37,26,16,.05), 0 4px 14px rgba(37,26,16,.07);
+  margin-bottom: 24px;
+}
+.section.heavy {
+  background: var(--paper);
+}
+.section-number {
+  font-size: .68em; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--ink-light); margin-bottom: 8px;
+}
+.section h2 {
+  font-size: 1.8em; font-weight: 900; letter-spacing: -.015em;
+  margin-bottom: 18px;
+}
+.section h2 em { font-style: normal; color: var(--coral); }
+
+.placeholder {
+  display: inline-block;
+  font-style: italic; color: var(--ink-light);
+  background: var(--cream);
+  padding: 4px 12px; border-radius: 4px;
+  font-size: .92em;
+}
+.placeholder-block {
+  display: block;
+  font-style: italic; color: var(--ink-light);
+  background: var(--cream);
+  padding: 14px 18px; border-radius: 6px;
+  font-size: .94em;
+  margin: 8px 0;
+  line-height: 1.65;
+}
+
+.etymology {
+  margin: 22px 0 8px;
+  padding: 14px 20px;
+  border: 1.5px solid var(--grid);
+  border-radius: 8px;
+  background: var(--cream);
+}
+.etymology .word {
+  font-size: 1.15em; font-weight: 800; color: var(--coral);
+  letter-spacing: .04em;
+  margin-bottom: 8px;
+}
+.etymology .gloss {
+  font-size: .92em; color: var(--ink-mid); line-height: 1.7;
+}
+.etymology .gloss em { color: var(--ink); font-style: italic; }
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 28px;
+  margin: 18px 0 22px;
+}
+@media (max-width: 560px) {
+  .why-grid { grid-template-columns: 1fr; }
+}
+.why-item {
+  border-left: 2px solid var(--grid);
+  padding-left: 14px;
+}
+.why-word {
+  font-size: 1em; font-weight: 700; color: var(--coral);
+  margin-bottom: 4px;
+}
+
+.footer {
+  padding: 24px 24px 64px; text-align: center;
+}
+.footer p {
+  font-size: .84em; color: var(--ink-light); font-style: italic;
+}
+.footer em { color: var(--ink-mid); }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../">← Technical Emotion Design</a>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">Muslin — front matter</div>
+  <h1>Why?</h1>
+  <p class="subtitle">Three words in the title. The reader will ask why each.</p>
+</header>
+
+<div class="deck">
+
+  <!-- ── 1. Why Design? (gentle opening) ── -->
+  <section class="section">
+    <div class="section-number">One</div>
+    <h2>Why <em>Design</em>?</h2>
+
+    <div class="placeholder-block">
+      [Hallie's paragraph. Design as making-and-arranging, not theorizing.
+      The reader will finish this book having made something, not having
+      learned a theory. Design as the form that techne-knowing takes when
+      it is deployed deliberately. The femme-coded recovery — design has
+      been dismissed precisely because it is the part of the work that
+      shows; this book takes that part seriously.]
+    </div>
+
+    <div class="etymology">
+      <div class="word">de-signare</div>
+      <div class="gloss">
+        Latin. <em>To mark out, to designate, to draw a sign.</em>
+        Design is the act of making something legible by marking it.
+        The apophatic discipline performed with a pen: drawing the
+        negative space so the positive space becomes visible. To design
+        is to choose what shows.
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 2. Why Technical? (sharpens) ── -->
+  <section class="section">
+    <div class="section-number">Two</div>
+    <h2>Why <em>Technical</em>?</h2>
+
+    <div class="placeholder-block">
+      [Hallie's paragraph. Design is good. Design is a craft. But
+      <em>technical</em> gives the craft teeth.
+
+      Techne is what Athens practiced when Athens was practicing well —
+      democracy as a craft, theater as a craft, weaving and shipbuilding
+      and strategy and citizenship as crafts. Athena was its patron.
+
+      Socrates was its last gasp. The practitioner who kept doing
+      techne — questioning, testing, asking what the work was really
+      for — after the city had stopped doing it correctly. They
+      executed him. That's the load-bearing fact: the civilization
+      that called itself craft killed the man who insisted the craft
+      required its practitioners to keep asking. A technical practice,
+      done seriously, has to be the kind of thing someone might be
+      killed for.
+
+      Not engineering. Engineering is predictable. Techne is living,
+      and the living is dangerous, and the danger is the discipline.]
+    </div>
+
+    <div class="etymology">
+      <div class="word">techne &nbsp;·&nbsp; τέχνη</div>
+      <div class="gloss">
+        Greek. <em>Craft, art, skill in making.</em> Athena's word
+        for what she does — weaving, strategy, invention, wisdom-in-doing.
+        Socrates's word for what he interrogated — the practitioner's
+        knowing, tested against itself, even when the testing was
+        unwelcome. A practice that admits of continued going; an
+        expertise that lives in the doing and the asking-about-the-doing.
+        <em>Technology</em> grew from this root but lost most of what
+        it meant: a craft is not a tool, an expertise is not a
+        graduation, and the inquiry is not optional. Engineering
+        finishes against a spec. Techne keeps going.
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 3. Why Emotion? (the heavy one) ── -->
+  <section class="section heavy">
+    <div class="section-number">Three</div>
+    <h2>Why <em>Emotion</em>?</h2>
+
+    <div class="placeholder-block">
+      [Hallie's opening — situated voice. <em>I make games. I design
+      learning environments. My job is to help people get through
+      difficult things — and now, to help AI systems thrive in
+      difficult circumstances. I need a model of how systems navigate
+      turbulence.</em>
+
+      <em>Emotions are a good model of that.</em> We already use them
+      to read systems — the weather feels angry; the algorithm is
+      panicking; the codebase is grumpy. Pathetic fallacy, English
+      teachers call it. A fallacy when it's careless; an instrument
+      when it's deliberate.
+
+      This book runs it deliberately. With careful categories, an
+      effective model of emotionality lets you read system dynamics
+      intuitively — your own, your students', your team's, your
+      Claude's, your watershed's.]
+    </div>
+
+    <p style="font-size:.96em; color:var(--ink-mid); margin: 18px 0 8px;">
+      Why <em>emotion</em>, and not —
+    </p>
+
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-word">cognition?</div>
+        <div class="placeholder">[a sentence]</div>
+      </div>
+      <div class="why-item">
+        <div class="why-word">affect?</div>
+        <div class="placeholder">[a sentence]</div>
+      </div>
+      <div class="why-item">
+        <div class="why-word">motivation?</div>
+        <div class="placeholder">[a sentence]</div>
+      </div>
+      <div class="why-item">
+        <div class="why-word">feeling?</div>
+        <div class="placeholder">[a sentence]</div>
+      </div>
+    </div>
+
+    <div class="etymology">
+      <div class="word">e-motion &nbsp;·&nbsp; ex + movere</div>
+      <div class="gloss">
+        Latin. <em>Ex</em> (out) + <em>movere</em> (to move). The
+        outward movement. The motion that breaks the surface. Shares
+        a root with <em>motivation</em>, <em>locomotion</em>,
+        <em>commotion</em>, <em>momentum</em>, <em>motive</em>,
+        <em>emote</em>. A whole family of moving-words; emotion is the
+        one that names <em>motion happening through a being</em>.
+      </div>
+    </div>
+
+    <div class="etymology">
+      <div class="word">pathos &nbsp;·&nbsp; πάθος</div>
+      <div class="gloss">
+        Greek. <em>That which befalls. Capacity for being moved.</em>
+        Not <em>pity</em>, not <em>melodrama</em>, not the modern
+        diminutive <em>pathetic</em>. The original sense is closer to
+        <em>susceptibility</em> — a thing's openness to being acted on
+        by what surrounds it. <em>Sympathy</em> and <em>empathy</em>
+        and <em>pathology</em> are all built on this root. A
+        <em>pathetic</em> reading is a reading that admits the system
+        is capable of being moved. <em>Pathetic fallacy</em>, in its
+        careful form, is the craft of reading turbulence by its
+        movements rather than by its parts.
+      </div>
+    </div>
+
+    <div class="placeholder-block" style="margin-top: 22px;">
+      [Hallie's close — the book's promise. What it means to design
+      for the moving thing rather than the static thing. Why this
+      changes how prompts are written, how classrooms are run, how
+      AI is deployed, how feedback lands.]
+    </div>
+  </section>
+
+</div>
+
+<div class="footer">
+  <p>Muslin. Order: <em>design → technical → emotion</em>. Easy doorway, then sharpens, then lands. Paragraphs are placeholders.</p>
+</div>
+
+</body>
+</html>
+</content>
+</invoke>
