@@ -459,6 +459,14 @@ body {
 
 <script>
 /* ── Ternary drag-and-drop ────────────────────────────── */
+/* KNOWN BUGS (muslin — not fixed, noted so they aren't rediscovered cold):
+   1. Tray chips do not follow the cursor while dragging — only placed
+      chips move live. A tray chip just teleports to the drop point on
+      release. Fix: render a live-following ghost element during tray drag.
+   2. No click-to-attach (magnet-to-cursor) fallback for users who tap
+      rather than drag. Worth adding for touch + accessibility.
+   The exercise is structurally sound; the interaction is unfinished.
+   Lower priority than writing the essay this exercise belongs inside. */
 const STORAGE_KEY = 'beer.muslin.why.ternary';
 
 const SEED_ITEMS = [
